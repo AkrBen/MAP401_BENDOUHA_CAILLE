@@ -7,3 +7,11 @@
 #include "exemple_sequence_point.c"
 
 typedef enum {Nord , Est , Sud , Ouest } Orientation;
+
+typedef struct{
+    Orientation orientation;
+    Point position;
+} Robot;
+
+Robot nouveauRobot();
+Contour calcul_ecriture_contour(Image I);
