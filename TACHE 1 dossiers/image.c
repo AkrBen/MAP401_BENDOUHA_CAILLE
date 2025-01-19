@@ -80,7 +80,7 @@ UINT hauteur_image(Image I)
    un message 
    version acceptant les fichiers avec 
    - ligne 1 : P1
-   - zero, une ou plusieurs lignes commençant toutes par #
+   - zero, une ou plusieurs lignes commenÃ§ant toutes par #
    - zero, un ou plusieurs separateurs
    - la largeur
    - un ou plusieurs separateurs
@@ -92,11 +92,11 @@ UINT hauteur_image(Image I)
 /* teste si le fichier d'identificateur f debute par un en-tete
    valide pour un fichier PBM :
    - ligne 1 : P1
-   - suivie de zero, une ou plusieurs lignes commençant toutes par #
+   - suivie de zero, une ou plusieurs lignes commenÃ§ant toutes par #
    La fonction se termine correctement si le fichier est correct, 
-   et le pointeur de fichier se trouve à la suite de l'entete.
+   et le pointeur de fichier se trouve Ã  la suite de l'entete.
    Sinon, l'execution du programme est arretee avec l'affichage d'un message
-   d'erreur (appel à ERREUR_FATALE)
+   d'erreur (appel Ã  ERREUR_FATALE)
     */ 
 void entete_fichier_pbm(FILE *f)
 {
@@ -128,7 +128,7 @@ void entete_fichier_pbm(FILE *f)
 	}
 	free(ligne);
 	
-	/* lecture des eventuelles lignes commençant par # */
+	/* lecture des eventuelles lignes commenÃ§ant par # */
 	BOOL boucle_ligne_commentaire = TRUE;
 	do
 	{
@@ -138,7 +138,7 @@ void entete_fichier_pbm(FILE *f)
 			ERREUR_FATALE("entete_fichier_pbm : fin fichier inattendue\n");
 		}
 		
-		/* lire un caractere et tester par rapport à '#' */
+		/* lire un caractere et tester par rapport Ã  '#' */
 		char c;
 		fscanf(f, "%c", &c);
 		if (c=='#')
@@ -151,7 +151,7 @@ void entete_fichier_pbm(FILE *f)
 		}
 		else
 		{
-			/* reculer d'un caractère dans f */
+			/* reculer d'un caractÃ¨re dans f */
 			fseek(f, -1, SEEK_CUR);
 			boucle_ligne_commentaire = FALSE;
 		}
@@ -227,20 +227,50 @@ Image lire_fichier_image(char *nom_f)
 	return I;
 }
 
-/* ecrire l'image I à l'ecran */
+/* ecrire l'image I Ã  l'ecran */
 void ecrire_image(Image I)
 {
-	
-	/** PARTIE A COMPLETER **/
-	
+Pixel P;
+UINT L , H ;
+L = largeur_image(I);
+H = hauteur_image(I);
+for(int y = 1 ; y<=H ; y++){
+    for(int x=1; x<=L ; x++){
+        P = get_pixel_image(I,x,y);
+        if (P==1) {
+            printf("@");
+        }
+        if (P==0) {
+            printf(".");
+        }
+    }
+    printf("\n");
 }
+
+
+    
+}
+
 
 /* creer et calculer l'image "negatif" de l'image I */
 /* l'image I n'est pas modifiee par cette fonction */
 /* la fonction renvoie l'image "negatif" de I */
 Image negatif_image(Image I)
 {
-	
-	/** PARTIE A COMPLETER **/
-	
+Image A;
+Pixel P;
+UINT L , H ;
+L = largeur_image(I);
+H = hauteur_image(I);
+A = creer_image(L,H);
+
+for(int y = 1 ; y<=H ; y++){
+    for(int x=1; x<=L ; x++){
+        P = get_pixel_image(I,x,y);
+        if (P==0) {
+            set_pixel_image(A,x,y,NOIR);
+    }
+    }
+}
+return A;
 }
