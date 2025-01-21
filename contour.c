@@ -65,16 +65,24 @@ void nouvelle_orientation(Robot r, Image I){
     }
 }
 
+void memoriser_position(Point p, Liste_Point L){
+    L=ajouter_element_liste_Point(L,p);
+    ecrire_contour(L);
+}
+
 Contour calcul_ecriture_contour(Image I){
     int x,y;
+    int x0=0;
+    int y0=0;
+    Liste_Point L=creer_liste_Point_vide();
     Robot r=nouveauRobot();
     int l=largeur_image(I);
     int h=hauteur_image(I);
     for (int i=0;i<l;i++){
         for (int j=0;j<h;j++){
             if ((get_pixel_image(I,i,j)==NOIR)&&(get_pixel_image(I,i,j-1)==BLANC)){
-                int x0=i-1;
-                int y0=j-1;
+                x0=i-1;
+                y0=j-1;
                 r.position={x0,y0};
                 Point P_initial=r.position;
                 j=h;
@@ -84,9 +92,12 @@ Contour calcul_ecriture_contour(Image I){
     }
     int boucle=1;
     while(boucle){
+        memoriser_position(L,r.position);
         avancer(r);
-        if ((r.position=={x0,y0}) && (r.orientation==EST)){
+        nouvelle_orientation(r,I);
+        if ((r.position.x==x0) && (r.position.y==y0) && (r.orientation==Est)){
             boucle=0;
         }
     }
+    memoriser_position(L,r.position);
 }
