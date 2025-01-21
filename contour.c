@@ -17,10 +17,26 @@ Robot nouveauRobot(){
 void avancer(Robot r){
     switch (r.orientation){
         case Est:
-            r.position=
-
+            r.position.x++;
+            break;
+        case Ouest:
+            r.position.x--;
+            break;
+        case Sud:
+            r.position.y++;
+            break;
+        case Nord:
+            r.position.y--;
+            break;
     }
 }
+
+void nouvelle_orientation(Robot r){
+    Robot r1=r;
+    r1.orientation=Nord;
+
+}
+
 Contour calcul_ecriture_contour(Image I){
     int x,y;
     Robot r=nouveauRobot();
@@ -42,6 +58,7 @@ Contour calcul_ecriture_contour(Image I){
     y=y0;
     int boucle=1;
     while(boucle){
-        
+        avancer(r);
+
     }
 }
