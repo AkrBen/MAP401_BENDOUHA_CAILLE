@@ -14,4 +14,5 @@ typedef struct{
 } Robot;
 
 Robot nouveauRobot();
+void avancer(Robot r);
 Contour calcul_ecriture_contour(Image I);
