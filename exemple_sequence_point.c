@@ -1,14 +1,9 @@
 #include<stdio.h>  /* utilisation des entrees-sorties standard de C */
 #include<stdlib.h> /* utilisation des fonctions malloc et free */
+#include<geom2d.h>
 
 /*---- le type Point et la fonction set_point ----*/
 /* ou inclure le module de la tache 2             */
-typedef struct Point_ { double x,y; } Point;
-
-Point set_point(double x, double y)
-{
-	Point P = {x,y}; return P;
-}
 
 /*---- le type cellule de liste de point ----*/
 typedef struct Cellule_Liste_Point_
@@ -97,7 +92,7 @@ Liste_Point supprimer_liste_Point(Liste_Point L)
 /* concatener L2 a la suite de L1, renvoie la liste L1 modifiee */
 Liste_Point concatener_liste_Point(Liste_Point L1, Liste_Point L2)
 {
-	/* cas où l'une des deux listes est vide */
+	/* cas oï¿½ l'une des deux listes est vide */
 	if (L1.taille == 0) return L2; 
 	if (L2.taille == 0) return L1;
 	

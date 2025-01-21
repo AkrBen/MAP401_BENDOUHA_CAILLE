@@ -71,6 +71,7 @@ void memoriser_position(Point p, Liste_Point L){
 }
 
 Contour calcul_ecriture_contour(Image I){
+    int segments=-1;
     int x,y;
     int x0=0;
     int y0=0;
@@ -93,6 +94,7 @@ Contour calcul_ecriture_contour(Image I){
     int boucle=1;
     while(boucle){
         memoriser_position(L,r.position);
+        segments++;
         avancer(r);
         nouvelle_orientation(r,I);
         if ((r.position.x==x0) && (r.position.y==y0) && (r.orientation==Est)){
@@ -100,4 +102,6 @@ Contour calcul_ecriture_contour(Image I){
         }
     }
     memoriser_position(L,r.position);
+    segments++;
+    printf("Ce contour est composé de %d segments\n", segments);
 }
