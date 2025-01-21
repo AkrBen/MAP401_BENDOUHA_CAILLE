@@ -31,10 +31,38 @@ void avancer(Robot r){
     }
 }
 
-void nouvelle_orientation(Robot r){
-    Robot r1=r;
-    r1.orientation=Nord;
+void tourner_90_degrees(Robot r){
+    switch (r.orientation){
+        case Est:
+            r.orientation=Nord;
+            break;
+        case Ouest:
+            r.orientation=Sud;
+            break;
+        case Sud:
+            r.orientation=Est;
+            break;
+        case Nord:
+            r.orientation=Ouest;
+            break;
+    }
+}
 
+void tourner_270_degrees(Robot r){
+    tourner_90_degrees(r);
+    tourner_90_degrees(r);
+    tourner_90_degrees(r);
+}
+
+void nouvelle_orientation(Robot r, Image I){
+    Pixel Pg=get_pixel_image(I,r.position.x-1,r.position.y-1);
+    Pixel Pd=get_pixel_image(I,r.position.x,r.position.y-1);
+    if (Pg==NOIR){
+        tourner_90_degrees(r);
+    }
+    else if (Pd=BLANC){
+        tourner_270_degrees(r);
+    }
 }
 
 Contour calcul_ecriture_contour(Image I){
@@ -54,11 +82,11 @@ Contour calcul_ecriture_contour(Image I){
             }
         }
     }
-    x=x0;
-    y=y0;
     int boucle=1;
     while(boucle){
         avancer(r);
-
+        if ((r.position=={x0,y0}) && (r.orientation==EST)){
+            boucle=0;
+        }
     }
 }
