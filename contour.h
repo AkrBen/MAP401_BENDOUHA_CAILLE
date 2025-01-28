@@ -14,9 +14,12 @@ typedef struct{
 } Robot;
 
 Robot nouveauRobot();
-void avancer(Robot r);
-void tourner_90_degrees(Robot r);
-void tourner_270_degrees(Robot r);
-void nouvelle_orientation(Robot r, Image I);
-void memoriser_position(Point p, Liste_Point L);
+Point avancer_inter(Robot r);
+Robot avancer(Robot r);
+Orientation tourner_90_degrees(Robot r);
+Orientation tourner_270_degrees(Robot r);
+Pixel valeur_pixel_gauche(Robot r, Image I);
+Pixel valeur_pixel_droite(Robot r, Image I);
+Orientation nouvelle_orientation(Robot r, Image I);
+Liste_Point memoriser_position(Point p, Liste_Point L);
 Contour calcul_ecriture_contour(Image I);
