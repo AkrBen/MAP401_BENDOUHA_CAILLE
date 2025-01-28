@@ -98,7 +98,7 @@ contour.o : contour.c contour.h image.h geom2d.h exemple_sequence_point.c
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-test_contour.o : test_contour.c contour.h image.h geom2d.h
+test_contour.o : test_contour.c contour.h
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module image"
@@ -123,7 +123,7 @@ test_geom2d : test_geom2d.o geom2d.o
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_contour : test_contour.o contour.o image.o 
+test_contour : test_contour.o contour.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@

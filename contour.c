@@ -2,15 +2,12 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
-#include "geom2d.h"
-#include "image.h"
-#include "exemple_sequence_point.c"
 #include "contour.h"
 
 Robot nouveauRobot(){
     Robot r;
     r.orientation=Est;
-    r.position={0, 0};
+    r.position=set_point(0,0);
     return r;
 }
 
@@ -60,7 +57,7 @@ void nouvelle_orientation(Robot r, Image I){
     if (Pg==NOIR){
         tourner_90_degrees(r);
     }
-    else if (Pd=BLANC){
+    else if (Pd==BLANC){
         tourner_270_degrees(r);
     }
 }
@@ -72,7 +69,6 @@ void memoriser_position(Point p, Liste_Point L){
 
 Contour calcul_ecriture_contour(Image I){
     int segments=-1;
-    int x,y;
     int x0=0;
     int y0=0;
     Liste_Point L=creer_liste_Point_vide();
@@ -84,8 +80,7 @@ Contour calcul_ecriture_contour(Image I){
             if ((get_pixel_image(I,i,j)==NOIR)&&(get_pixel_image(I,i,j-1)==BLANC)){
                 x0=i-1;
                 y0=j-1;
-                r.position={x0,y0};
-                Point P_initial=r.position;
+                r.position=set_point(x0,y0);
                 j=h;
                 i=l;
             }
@@ -93,7 +88,7 @@ Contour calcul_ecriture_contour(Image I){
     }
     int boucle=1;
     while(boucle){
-        memoriser_position(L,r.position);
+        memoriser_position(r.position,L);
         segments++;
         avancer(r);
         nouvelle_orientation(r,I);
@@ -101,7 +96,8 @@ Contour calcul_ecriture_contour(Image I){
             boucle=0;
         }
     }
-    memoriser_position(L,r.position);
+    memoriser_position(r.position,L);
     segments++;
     printf("Ce contour est composé de %d segments\n", segments);
+    return L;
 }
