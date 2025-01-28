@@ -141,7 +141,7 @@ void ecrire_contour(Liste_Point L)
 	int k;
 	int nP = TP.taille;
 	
-	printf("Contour avec %d points\n[", nP);
+	printf("[");
 	for (k = 0; k < nP; k++)
 	{	
 		Point P = TP.tab[k]; /* recuperer le point d'indice k */
@@ -150,6 +150,7 @@ void ecrire_contour(Liste_Point L)
 	printf("]\n");
 	
 	free(TP.tab); /* supprimer le tableau de point TP */
+	printf("Contour avec %d points.\n", nP);
 }
 
 //int main()
