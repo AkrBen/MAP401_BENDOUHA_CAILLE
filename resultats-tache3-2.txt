@@ -1,0 +1,35 @@
+chat.pbm
+largeur:250  hauteur:140
+880 segments
+
+coq.pbm
+largeur:700  hauteur:720
+5386 segments
+
+elephant.pbm
+largeur:800  hauteur:700
+5344 segments
+
+gymnaste.pbm
+largeur:1056 hauteur:1647
+8784 segments
+
+image_ex_poly.pbm
+largeur:4  hauteur:4
+18 segments
+
+labyrinthe.pbm
+largeur:221  hauteur:201
+44000 segments
+
+lettreZ.pbm
+largeur:600  hauteur:1029
+9396 segments
+
+map401.pbm
+largeur:830  hauteur:300
+8072 segments
+
+tete.pbm
+largeur:1252  hauteur:1252
+8136 segments
