@@ -39,7 +39,7 @@ int main (int argc, char* argv[]){
     int nP = TP.taille;
 
     Point P = TP.tab[0];
-    fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, P.y);
+    fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h-P.y);
 
     for (k = 1; k < nP; k++) {    
         P = TP.tab[k]; 
