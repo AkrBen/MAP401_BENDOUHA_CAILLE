@@ -18,8 +18,16 @@ int main (int argc, char* argv[]){
     I = lire_fichier_image(argv[1]);
     UINT h=hauteur_image(I);
     UINT l=largeur_image(I);
+    char nom[1000];
 
-    fichier=fopen("fichier.eps","w");
+    for (int i=0;i<strlen(argv[1])-4;i++){
+        nom[i]=argv[1][i];
+    }
+
+    strcat(nom,"_");
+    strcat(nom, argv[2]);
+    strcat(nom, ".eps");
+    fichier=fopen(nom,"w");
     fprintf(fichier, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     fprintf(fichier, "%%%%BoundingBox: 0 0 %d %d\n", l, h);
     fprintf(fichier, "0 setlinewidth\n");
