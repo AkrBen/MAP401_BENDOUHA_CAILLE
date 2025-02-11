@@ -149,26 +149,48 @@ Image pixels_candidats(Image I){
     return M;
 }
 
-Contour calcul_contour_a_partir_de_pixel(Image I, Point p){
+Contour calcul_contour_a_partir_de_pixel(Image I, Image M, Point p){
     int segments=-1;
     Liste_Point L=creer_liste_Point_vide();
     Robot r=nouveauRobot();
-    r.position=p;
+    int x0=p.x-1;
+    int y0=p.y-1;
+    r.position=set_point(x0,y0);
+    set_pixel_image(M,r.position.x+1,r.position.y+1,0);
     int boucle=1;
     while(boucle==1){
         L=memoriser_position(r.position,L);
         segments++;
+        set_pixel_image(M,r.position.x+1,r.position.y+1,0);
         r=avancer(r);
         r.orientation=nouvelle_orientation(r,I);
-        if ((dist(r.position, p)==0) && (r.orientation==Est)){
+        if ((r.position.x==x0) && (r.position.y==y0) && (r.orientation==Est)){
             boucle=0;
         }
     }
     L=memoriser_position(r.position,L);
     ecrire_contour(L);
     segments++;
-    //printf("Ce contour est composé de %d segments\n", segments);
+    printf("Ce contour est composé de %d segments\n", segments);
     return L;
 }
 
-Liste_Point
+void calcul_tous_contours(Image I){
+    //Cellule_Liste_Point contours[100];
+    Image M=pixels_candidats(I);
+    int l=largeur_image(M);
+    int h=hauteur_image(M);
+    //int c=0;
+     for (int i=0;i<l;i++){
+        for (int j=0;j<h;j++){
+            if (get_pixel_image(M,i,j)==NOIR){
+                Point p=set_point(i,j);
+                Liste_Point L=creer_liste_Point_vide();
+                L=calcul_contour_a_partir_de_pixel(I,M,p);
+                //*contours[c]=L.first;
+                //c++;
+            }
+        }
+    }
+    //return contours;
+}

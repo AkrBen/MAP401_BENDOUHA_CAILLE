@@ -157,6 +157,13 @@ conversion_en_eps : conversion_en_eps.o contour.o image.o geom2d.o exemple_seque
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
+test_tache5: test_tache5.o contour.o image.o geom2d.o exemple_sequence_point.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
 # regle pour "nettoyer" le r�pertoire
 clean:
 	rm -fR $(EXECUTABLES) *.o 
