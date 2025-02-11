@@ -149,7 +149,7 @@ Image pixels_candidats(Image I){
     return M;
 }
 
-int calcul_contour_a_partir_de_pixel(Image I, Image M, Point p){
+Contour calcul_contour_a_partir_de_pixel(Image I, Image M, Point p){
     int segments=-1;
     Liste_Point L=creer_liste_Point_vide();
     Robot r=nouveauRobot();
@@ -172,21 +172,44 @@ int calcul_contour_a_partir_de_pixel(Image I, Image M, Point p){
     ecrire_contour(L);
     segments++;
     printf("Ce contour est composé de %d segments\n", segments);
-    return segments+1;
+    return L;
 }
 
-void calcul_tous_contours(Image I){
+int compter_segments_contours(Contour L){
+    int x=0;
+    Cellule_Liste_Point *el = L.first;
+    while (el) {
+		x++;
+		el = el->suiv; /* passer a l'element suivant dans la liste chainee */
+	}
+    return x;
+}
+
+Contour calcul_tous_contours(Image I){
     //Cellule_Liste_Point contours[100];
     Image M=pixels_candidats(I);
     int l=largeur_image(M);
     int h=hauteur_image(M);
     int c=0;
     int segments_total=0;
+    Liste_Point L2=creer_liste_Point_vide();
+    Liste_Point L1=creer_liste_Point_vide();
+    Liste_Point L=creer_liste_Point_vide();
      for (int i=0;i<l;i++){
         for (int j=0;j<h;j++){
             if (get_pixel_image(M,i,j)==NOIR){
                 Point p=set_point(i,j);
-                segments_total=segments_total+calcul_contour_a_partir_de_pixel(I,M,p);
+                Liste_Point L=creer_liste_Point_vide();
+                L=calcul_contour_a_partir_de_pixel(I,M,p);
+                segments_total=segments_total+compter_segments_contours(L);
+                if (c>0){
+                    Liste_Point L2=creer_liste_Point_vide();
+                    L2=concatener_liste_Point(L1,L);
+                    printf("L2: %d\n",c);
+                    ecrire_contour(L2);
+                }
+                Liste_Point L1=creer_liste_Point_vide();
+                L1=L2;
                 //*contours[c]=L.first;
                 c++;
             }
@@ -195,4 +218,5 @@ void calcul_tous_contours(Image I){
     printf("\nCette image a %d contours.\n",c);
     printf("Cette image a %d points.\n",segments_total);
     printf("Cette image a %d segments.\n",segments_total-c);
+    return L;
 }

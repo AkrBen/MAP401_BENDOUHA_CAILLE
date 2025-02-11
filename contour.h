@@ -24,5 +24,6 @@ Orientation nouvelle_orientation(Robot r, Image I);
 Liste_Point memoriser_position(Point p, Liste_Point L);
 Contour calcul_ecriture_contour(Image I);
 Image pixels_candidats(Image I);
-int calcul_contour_a_partir_de_pixel(Image I, Image M, Point p);
-void calcul_tous_contours(Image I);
+Contour calcul_contour_a_partir_de_pixel(Image I, Image M, Point p);
+int compter_segments_contours(Contour L);
+Contour calcul_tous_contours(Image I);
