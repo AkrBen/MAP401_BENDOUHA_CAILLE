@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps
+EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5
 
 
 #############################################################################
@@ -94,28 +94,35 @@ test_geom2d.o : test_geom2d.c geom2d.h
 exemple_sequence_point.o : exemple_sequence_point.c exemple_sequence_point.h
 	@echo ""
 	@echo "---------------------------------------------"
-	@echo "Compilation du module image"
+	@echo "Compilation du module exemple_sequence_point"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
 contour.o : contour.c contour.h image.h geom2d.h exemple_sequence_point.h
 	@echo ""
 	@echo "---------------------------------------------"
-	@echo "Compilation du module image"
+	@echo "Compilation du module contour"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
 test_contour.o : test_contour.c contour.h image.h geom2d.h exemple_sequence_point.h
 	@echo ""
 	@echo "---------------------------------------------"
-	@echo "Compilation du module image"
+	@echo "Compilation du module test_contour"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 		
 conversion_en_eps.o : conversion_en_eps.c contour.h image.h geom2d.h exemple_sequence_point.h
 	@echo ""
 	@echo "---------------------------------------------"
-	@echo "Compilation du module image"
+	@echo "Compilation du module conversion_en_eps"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+
+test_tache5.o: test_tache5.c contour.h image.h geom2d.h exemple_sequence_point.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module test_tache5"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 		

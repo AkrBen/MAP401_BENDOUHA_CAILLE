@@ -134,3 +134,41 @@ Contour calcul_ecriture_contour(Image I){
     printf("Ce contour est composé de %d segments\n", segments);
     return L;
 }
+
+Image pixels_candidats(Image I){
+    int l=largeur_image(I);
+    int h=hauteur_image(I);
+    Image M=creer_image(l,h);
+    for (int i=0;i<l;i++){
+        for (int j=0;j<h;j++){
+            if ((get_pixel_image(I,i,j)==NOIR)&&(get_pixel_image(I,i,j-1)==BLANC)){
+                set_pixel_image(M,i,j,1);
+            }
+        }
+    }
+    return M;
+}
+
+Contour calcul_contour_a_partir_de_pixel(Image I, Point p){
+    int segments=-1;
+    Liste_Point L=creer_liste_Point_vide();
+    Robot r=nouveauRobot();
+    r.position=p;
+    int boucle=1;
+    while(boucle==1){
+        L=memoriser_position(r.position,L);
+        segments++;
+        r=avancer(r);
+        r.orientation=nouvelle_orientation(r,I);
+        if ((dist(r.position, p)==0) && (r.orientation==Est)){
+            boucle=0;
+        }
+    }
+    L=memoriser_position(r.position,L);
+    ecrire_contour(L);
+    segments++;
+    //printf("Ce contour est composé de %d segments\n", segments);
+    return L;
+}
+
+Liste_Point
