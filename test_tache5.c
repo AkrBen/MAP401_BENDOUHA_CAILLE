@@ -10,6 +10,6 @@ int main(int argc, char* argv[]){
     I=lire_fichier_image(argv[1]);
     Liste_Point L=creer_liste_Point_vide();
     L=calcul_tous_contours(I);
-    ecrire_contour(L);
+    //ecrire_contour(L);
     return 1;
 }
