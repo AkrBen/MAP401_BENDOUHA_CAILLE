@@ -20,7 +20,6 @@ int main(int argc, char *argv[]) {
     UINT l = largeur_image(I);
     char nom[1000];
 
-    // Création du nom du fichier de sortie
     int i;
     for (i = 0; i < strlen(argv[1]) - 4; i++) {
         nom[i] = argv[1][i];
