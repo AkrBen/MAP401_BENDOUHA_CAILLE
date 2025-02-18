@@ -222,6 +222,6 @@ Contour calcul_tous_contours(Image I){
     printf("\nCette image a %d contours.\n",c);
     printf("Cette image a %d points.\n",segments_total);
     printf("Cette image a %d segments.\n",segments_total-c);
-    ecrire_contour(L1);
+    //ecrire_contour(L1);
     return L1;
 }
