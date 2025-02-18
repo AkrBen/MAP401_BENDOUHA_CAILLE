@@ -1,82 +1,78 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
 #include "contour.h"
 
-
-int main (int argc, char* argv[]){
-    FILE * fichier;
+int main(int argc, char *argv[]) {
+    FILE *fichier;
     Image I;
     Contour C;
 
-    if (argc !=3) {
-        printf("Erreur: <fichier.pbm> + <stroke ou fill>\n");
+    if (argc != 3) {
+        printf("Erreur: <fichier.pbm> <stroke ou fill>\n");
         return -1;
     }
 
     I = lire_fichier_image(argv[1]);
-    UINT h=hauteur_image(I);
-    UINT l=largeur_image(I);
+
+    UINT h = hauteur_image(I);
+    UINT l = largeur_image(I);
     char nom[1000];
 
-    for (int i=0;i<strlen(argv[1])-4;i++){
-        nom[i]=argv[1][i];
+    // Création du nom du fichier de sortie
+    int i;
+    for (i = 0; i < strlen(argv[1]) - 4; i++) {
+        nom[i] = argv[1][i];
     }
-
-    strcat(nom,"_");
+    nom[i] = '\0'; 
+    strcat(nom, "_");
     strcat(nom, argv[2]);
     strcat(nom, ".eps");
-    fichier=fopen(nom,"w");
+
+    fichier = fopen(nom, "w");
+    if (fichier == NULL) {
+        printf("Erreur: impossible de créer le fichier %s\n", nom);
+        return -1;
+    }
+
     fprintf(fichier, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     fprintf(fichier, "%%%%BoundingBox: 0 0 %d %d\n", l, h);
     fprintf(fichier, "0 setlinewidth\n");
 
+    // Calcul des contours
     C = calcul_ecriture_contour(I);
-
-
-
-
-
-
-  //  Tableau_Point TP = sequence_points_liste_vers_tableau(C);
-   // int k;
-  //  int nP = TP.taille;
-
- //   Point P = TP.tab[0];
-  //  fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h-P.y);
-
-   // for (k = 1; k < nP; k++) {    
-   //     P = TP.tab[k]; 
-   //     fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h-P.y);
-    //} 
-
     Tableau_Point TP = sequence_points_liste_vers_tableau(C);
     int k = 0;
     int nP = TP.taille;
-    Point premier_point , P;
+    Point premier_point, P;
 
-    while (k < nP){
-    P = TP.tab[k];
-    premier_point = P;
-    fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h-P.y);
-    k++;
-    P = TP.tab[k]; 
-
-    while ((premier_point.x != P.x) && (premier_point.y != P.y)){
-        P = TP.tab[k]; 
-        fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h-P.y);
+    while (k < nP) {
+        P = TP.tab[k];
+        premier_point = P;
+        fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h - P.y);
         k++;
-    }
-    fprintf(fichier, "%5.1f %5.1f lineto\n\n", P.x, h-P.y);
-    k++;
-    } 
 
+        while (k < nP) {
+            P = TP.tab[k];
+            fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h - P.y);
+            k++;
+
+            if (P.x == premier_point.x && P.y == premier_point.y) {
+                break;
+            }
+        }
+        fprintf(fichier, "\n");
+    }
 
     if (strcmp(argv[2], "stroke") == 0) {
         fprintf(fichier, "stroke\n");
     } else if (strcmp(argv[2], "fill") == 0) {
         fprintf(fichier, "fill\n");
+    } else {
+        printf("Erreur: argument incorrect, utiliser 'stroke' ou 'fill'\n");
+        fclose(fichier);
+        return -1;
     }
 
     fprintf(fichier, "showpage\n");
@@ -84,4 +80,3 @@ int main (int argc, char* argv[]){
 
     return 0;
 }
-
