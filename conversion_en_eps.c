@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
     fprintf(fichier, "%%%%BoundingBox: 0 0 %d %d\n", l, h);
     fprintf(fichier, "0 setlinewidth\n");
 
-    C = calcul_tous_contour(I);
+    C = calcul_tous_contours(I);
     Tableau_Point TP = sequence_points_liste_vers_tableau(C);
     int k = 0;
     int nP = TP.taille;
