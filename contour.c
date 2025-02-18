@@ -107,8 +107,8 @@ Contour calcul_ecriture_contour(Image I){
     Robot r=nouveauRobot();
     int l=largeur_image(I);
     int h=hauteur_image(I);
-    for (int i=0;i<l;i++){
-        for (int j=0;j<h;j++){
+    for (int i=1;i<=l;i++){
+        for (int j=1;j<=h;j++){
             if ((get_pixel_image(I,i,j)==NOIR)&&(get_pixel_image(I,i,j-1)==BLANC)){
                 x0=i-1;
                 y0=j-1;
@@ -139,13 +139,14 @@ Image pixels_candidats(Image I){
     int l=largeur_image(I);
     int h=hauteur_image(I);
     Image M=creer_image(l,h);
-    for (int i=0;i<l;i++){
-        for (int j=0;j<h;j++){
+    for (int i=1;i<=l;i++){
+        for (int j=1;j<=h;j++){
             if ((get_pixel_image(I,i,j)==NOIR)&&(get_pixel_image(I,i,j-1)==BLANC)){
                 set_pixel_image(M,i,j,1);
             }
         }
     }
+    
     return M;
 }
 
@@ -161,7 +162,10 @@ Contour calcul_contour_a_partir_de_pixel(Image I, Image M, Point p){
     while(boucle==1){
         L=memoriser_position(r.position,L);
         segments++;
-        set_pixel_image(M,r.position.x+1,r.position.y+1,0);
+        if (r.orientation==Est){
+            set_pixel_image(M,r.position.x+1,r.position.y+1,0);
+        }
+        
         r=avancer(r);
         r.orientation=nouvelle_orientation(r,I);
         if ((r.position.x==x0) && (r.position.y==y0) && (r.orientation==Est)){
@@ -195,21 +199,21 @@ Contour calcul_tous_contours(Image I){
     Liste_Point L2=creer_liste_Point_vide();
     Liste_Point L1=creer_liste_Point_vide();
     Liste_Point L=creer_liste_Point_vide();
-     for (int i=0;i<l;i++){
-        for (int j=0;j<h;j++){
+     for (int i=1;i<=l;i++){
+        for (int j=1;j<=h;j++){
             if (get_pixel_image(M,i,j)==NOIR){
                 Point p=set_point(i,j);
                 Liste_Point L=creer_liste_Point_vide();
                 L=calcul_contour_a_partir_de_pixel(I,M,p);
                 segments_total=segments_total+compter_segments_contours(L);
-                if (c>0){
+                //if (c>0){
                     Liste_Point L2=creer_liste_Point_vide();
-                    L2=concatener_liste_Point(L1,L);
-                    printf("L2: %d\n",c);
-                    ecrire_contour(L2);
-                }
-                Liste_Point L1=creer_liste_Point_vide();
-                L1=L2;
+                    L1=concatener_liste_Point(L1,L);
+                    //printf("L1: %d\n",c);
+                    //ecrire_contour(L1);
+                //}
+                //Liste_Point L1=creer_liste_Point_vide();
+                //L1=L2;
                 //*contours[c]=L.first;
                 c++;
             }
@@ -218,5 +222,6 @@ Contour calcul_tous_contours(Image I){
     printf("\nCette image a %d contours.\n",c);
     printf("Cette image a %d points.\n",segments_total);
     printf("Cette image a %d segments.\n",segments_total-c);
-    return L;
+    ecrire_contour(L1);
+    return L1;
 }
