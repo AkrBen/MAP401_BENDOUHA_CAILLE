@@ -34,17 +34,44 @@ int main (int argc, char* argv[]){
 
     C = calcul_ecriture_contour(I);
 
+
+
+
+
+
+  //  Tableau_Point TP = sequence_points_liste_vers_tableau(C);
+   // int k;
+  //  int nP = TP.taille;
+
+ //   Point P = TP.tab[0];
+  //  fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h-P.y);
+
+   // for (k = 1; k < nP; k++) {    
+   //     P = TP.tab[k]; 
+   //     fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h-P.y);
+    //} 
+
     Tableau_Point TP = sequence_points_liste_vers_tableau(C);
-    int k;
+    int k = 0;
     int nP = TP.taille;
+    Point premier_point , P;
 
-    Point P = TP.tab[0];
+    while (k < nP){
+    P = TP.tab[k];
+    premier_point = P;
     fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h-P.y);
+    k++;
+    P = TP.tab[k]; 
 
-    for (k = 1; k < nP; k++) {    
+    while ((premier_point.x != P.x) && (premier_point.y != P.y)){
         P = TP.tab[k]; 
         fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h-P.y);
+        k++;
+    }
+    fprintf(fichier, "%5.1f %5.1f lineto\n\n", P.x, h-P.y);
+    k++;
     } 
+
 
     if (strcmp(argv[2], "stroke") == 0) {
         fprintf(fichier, "stroke\n");
