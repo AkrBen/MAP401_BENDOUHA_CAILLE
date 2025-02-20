@@ -40,5 +40,7 @@ double eucli_standard(Vecteur V);
 /* Distance entre deux points P1 et P2 */
 double dist(Point P1, Point P2);
 
+/* Distance entre un Point P et un segment [A,B] */
+double dist_point_seg(Point P, Point A, Point B);
 
 

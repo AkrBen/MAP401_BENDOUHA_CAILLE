@@ -44,7 +44,7 @@ Vecteur mult_vect(Vecteur V, int a){
 }
 
 double scalar_prod(Vecteur V1, Vecteur V2){
-  double n = (V1.x*V2.x)+(V1.y+V2.y);
+  double n = (V1.x*V2.x)+(V1.y*V2.y);
   return n;
 }
 
@@ -56,4 +56,29 @@ double eucli_standard(Vecteur V){
 double dist(Point P1, Point P2){
   double n = sqrt(pow(P1.x-P2.x,2)+pow(P1.y-P2.y,2));
   return n;
+}
+
+double dist_point_seg(Point P, Point A, Point B){
+
+  if (A.x == B.x && A.y == B.y) {
+    return dist(P,A);
+  }
+
+  Vecteur AB = vect_bipoint(A, B);
+  Vecteur AP = vect_bipoint(A, P);
+
+  double AB_AB = scalar_prod(AB, AB);
+  double AP_AB = scalar_prod(AP, AB);
+  double lambda = AP_AB / AB_AB;
+
+  if (lambda < 0) {
+    return dist(A,P); 
+
+  } else if (lambda > 1) {
+    return dist(B,P); 
+
+  } else {
+  Point Q = set_point(A.x + lambda * AB.x, A.y + lambda * AB.y);
+  return dist(Q,P); 
+}
 }

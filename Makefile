@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5
+EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5 test_dist_point_segment
 
 
 #############################################################################
@@ -125,6 +125,13 @@ test_tache5.o: test_tache5.c contour.h image.h geom2d.h exemple_sequence_point.h
 	@echo "Compilation du module test_tache5"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
+
+test_dist_point_segment.o : test_dist_point_segment.c geom2d.h 
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module test_dist_point_segment"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
 		
 ########################################################
 # regles explicites de creation des executables
@@ -158,6 +165,13 @@ conversion_en_eps : conversion_en_eps.o contour.o image.o geom2d.o exemple_seque
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_tache5: test_tache5.o contour.o image.o geom2d.o exemple_sequence_point.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_dist_point_segment : test_dist_point_segment.o geom2d.o 
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@
