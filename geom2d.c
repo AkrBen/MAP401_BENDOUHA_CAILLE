@@ -6,12 +6,19 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
-#include"geom2d.h"
+#include"exemple_sequence_point.h"
 
 Point set_point( double x, double y)
 {
 Point P = {x, y} ;
 return P ;
+}
+
+Segment set_segment(Point Px, Point Py){
+  Segment S;
+  S.Px=Px;
+  S.Py=Py;
+  return S;
 }
 
 Point add_point( Point P1, Point P2)
@@ -81,4 +88,24 @@ double dist_point_seg(Point P, Point A, Point B){
   Point Q = set_point(A.x + lambda * AB.x, A.y + lambda * AB.y);
   return dist(Q,P); 
 }
+}
+
+Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, int d){
+  Point Pj1;
+  Point Pj2;
+  Liste_Point CONT1=creer_liste_Point_vide();
+  int c=0;
+  for (int i=0;i<=j2;i++){
+    if (i==j1){
+      Pj1=CONT.first->data;
+      c++;
+    }
+    if (c==1){
+      ajouter_element_liste_Point(CONT1,CONT.first->data);
+    }
+    CONT=supprimer_premier_element_liste_Point(CONT);
+  }
+  Pj2=CONT.last->data;
+  Segment S=set_segment(Pj1,Pj2);
+
 }

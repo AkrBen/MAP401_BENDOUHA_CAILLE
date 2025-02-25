@@ -4,23 +4,7 @@
 /*---- le type Point et la fonction set_point ----*/
 /* ou inclure le module de la tache 2             */
 
-/*---- le type cellule de liste de point ----*/
-typedef struct Cellule_Liste_Point_
-{
-	Point data;    /* donnee de l'element de liste */
-	struct Cellule_Liste_Point_* suiv; /* pointeur sur l'element suivant */
-} Cellule_Liste_Point;
 
-/*---- le type liste de point ----*/
-typedef struct Liste_Point_
-{
-	unsigned int taille;        /* nombre d'elements dans la liste */
-	Cellule_Liste_Point *first; /* pointeur sur le premier element de la liste */
-	Cellule_Liste_Point *last;  /* pointeur sur le dernier element de la liste */
-	                       /* first = last = NULL et taille = 0 <=> liste vide */
-} Liste_Point;
-
-typedef Liste_Point Contour; /* type Contour = type Liste_Point */
 
 /*---- le type tableau de point ----*/
 typedef struct Tableau_Point_

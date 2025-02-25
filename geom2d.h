@@ -1,6 +1,7 @@
 /****************************************************************************** 
   Interface du module geom2d
 ******************************************************************************/
+/*---- le type cellule de liste de point ----*/
 
 
 typedef struct Vecteur_ 
@@ -13,8 +14,48 @@ typedef struct Point_
 double x , y ; /*coordonnees*/  
 } Point ;
 
+typedef struct Segment_
+{
+Point Px;
+Point Py;
+} Segment ;
+
+typedef struct Cellule_Liste_Point_
+{
+	Point data;    /* donnee de l'element de liste */
+	struct Cellule_Liste_Point_* suiv; /* pointeur sur l'element suivant */
+} Cellule_Liste_Point;
+
+/*---- le type liste de point ----*/
+typedef struct Liste_Point_
+{
+	unsigned int taille;        /* nombre d'elements dans la liste */
+	Cellule_Liste_Point *first; /* pointeur sur le premier element de la liste */
+	Cellule_Liste_Point *last;  /* pointeur sur le dernier element de la liste */
+	                       /* first = last = NULL et taille = 0 <=> liste vide */
+} Liste_Point;
+
+typedef struct Cellule_Liste_Segment_
+{
+	Segment data;    /* donnee de l'element de liste */
+	struct Cellule_Liste_Segment_* suiv; /* pointeur sur l'element suivant */
+} Cellule_Liste_Segment;
+
+typedef struct Liste_Segment_
+{
+	unsigned int taille;        /* nombre d'elements dans la liste */
+	Cellule_Liste_Segment *first; /* pointeur sur le premier element de la liste */
+	Cellule_Liste_Segment *last;  /* pointeur sur le dernier element de la liste */
+	                       /* first = last = NULL et taille = 0 <=> liste vide */
+} Liste_Segment;
+
+typedef Liste_Point Contour; /* type Contour = type Liste_Point */
+
 /* cree le point de coordonnées (x,y) */  
 Point set_point( double x, double y) ;
+
+/* cree le segment de points Px et Py*/
+Segment set_segment(Point Px, Point Py) ;
 
 /* somme P1+P2 */ 
 Point add_point(Point P1, Point P2) ;
@@ -43,4 +84,6 @@ double dist(Point P1, Point P2);
 /* Distance entre un Point P et un segment [A,B] */
 double dist_point_seg(Point P, Point A, Point B);
 
+/*Simplification de Douglas-Peucker d'un contour de points*/
+Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, int d);
 

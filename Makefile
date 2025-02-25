@@ -77,7 +77,7 @@ test_image.o : test_image.c image.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-geom2d.o : geom2d.c geom2d.h 
+geom2d.o : geom2d.c exemple_sequence_point.h 
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module geom2d"
