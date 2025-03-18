@@ -132,6 +132,8 @@ Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L)
 	return T;
 }
 
+
+
 /* ecrire le contour L a l'ecran 
    cette fonction montre un exemple de conversion d'une liste de points en
    tableau de points afin de pouvoir par la suite acceder aux elements d'une

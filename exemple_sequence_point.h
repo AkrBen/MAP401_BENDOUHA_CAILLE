@@ -25,4 +25,6 @@ Liste_Point concatener_liste_Point(Liste_Point L1, Liste_Point L2);
 
 Liste_Point supprimer_premier_element_liste_Point(Liste_Point L);
 Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L);
+
+//Liste_Segment creer_liste_Segment();
 void ecrire_contour(Liste_Point L);
