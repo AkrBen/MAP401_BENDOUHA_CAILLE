@@ -84,6 +84,5 @@ double dist(Point P1, Point P2);
 /* Distance entre un Point P et un segment [A,B] */
 double dist_point_seg(Point P, Point A, Point B);
 
-/*Simplification de Douglas-Peucker d'un contour de points*/
-Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, int d);
+
 

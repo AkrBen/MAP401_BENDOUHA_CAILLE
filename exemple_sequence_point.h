@@ -28,3 +28,6 @@ Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L);
 
 //Liste_Segment creer_liste_Segment();
 void ecrire_contour(Liste_Point L);
+
+/*Simplification de Douglas-Peucker d'un contour de points*/
+Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, int d);

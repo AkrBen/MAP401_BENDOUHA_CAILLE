@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5 test_dist_point_segment
+EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5 test_dist_point_segment test_simplification_douglas_pecker
 
 
 #############################################################################
@@ -77,7 +77,7 @@ test_image.o : test_image.c image.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-geom2d.o : geom2d.c exemple_sequence_point.h 
+geom2d.o : geom2d.c exemple_sequence_point.c exemple_sequence_point.h 
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module geom2d"
@@ -132,6 +132,13 @@ test_dist_point_segment.o : test_dist_point_segment.c geom2d.h
 	@echo "Compilation du module test_dist_point_segment"
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
+
+test_simplification_douglas_pecker.o: test_simplification_douglas_pecker.c contour.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module test_simplification_douglas_pecker"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
 		
 ########################################################
 # regles explicites de creation des executables
@@ -172,6 +179,13 @@ test_tache5: test_tache5.o contour.o image.o geom2d.o exemple_sequence_point.o
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_dist_point_segment : test_dist_point_segment.o geom2d.o 
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_simplification_douglas_pecker : test_simplification_douglas_pecker.o image.o exemple_sequence_point.o contour.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@
