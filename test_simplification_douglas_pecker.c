@@ -23,6 +23,8 @@ int main (int argc, char* argv[]){
     nom[i] = '\0'; 
     strcat(nom, "_");
     strcat(nom, argv[3]);
+    strcat(nom, "_d");
+    strcat(nom,argv[2]);
     strcat(nom, ".eps");
     fichier = fopen(nom, "w");
     if (fichier == NULL) {
@@ -44,6 +46,8 @@ int main (int argc, char* argv[]){
     int k = 0;
     int nP = TP.taille;
     Point premier_point, P;
+
+    printf("Contour avec %d points.\nCe contour est composé de %d segments\n",nP,nP-1);
 
     while (k < nP) {
         P = TP.tab[k];
