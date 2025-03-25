@@ -28,12 +28,37 @@ Liste_Point creer_liste_Point_vide()
 	return L;
 }
 
+Liste_Segment creer_liste_Segment_vide()
+{
+	Liste_Segment L = {0, NULL, NULL};
+	return L;
+}
+
 /* ajouter l'element e en fin de la liste L, renvoie la liste L modifiee */
 Liste_Point ajouter_element_liste_Point(Liste_Point L, Point e)
 {
 	Cellule_Liste_Point *el;
 	
 	el = creer_element_liste_Point(e);
+	if (L.taille == 0)
+	{
+		/* premier element de la liste */
+		L.first = L.last = el;
+	}
+	else
+	{
+		L.last->suiv = el;
+		L.last = el;
+	}
+	L.taille++;
+	return L;
+}
+
+Liste_Segment ajouter_element_liste_Segment(Liste_Segment L, Segment e)
+{
+	Cellule_Liste_Segment *el;
+	
+	el = creer_element_liste_Segment(e);
 	if (L.taille == 0)
 	{
 		/* premier element de la liste */
@@ -196,9 +221,9 @@ Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, i
 	int dmax=0;
 	int dj;
 	int k=j1;
-	Liste_Segment L;
-	Liste_Segment L1;
-	Liste_Segment L2;
+	Liste_Segment L=creer_liste_Segment_vide();
+	Liste_Segment L1=creer_liste_Segment_vide();
+	Liste_Segment L2=creer_liste_Segment_vide();
 	Liste_Point CONT1=creer_liste_Point_vide();
 	int c=0;
 	for (int i=0;i<=j2;i++){
@@ -211,17 +236,19 @@ Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, i
 	  }
 	  CONT=supprimer_premier_element_liste_Point(CONT);
 	}
-	Pj2=CONT.last->data;
+	Tableau_Point CONT2=sequence_points_liste_vers_tableau(CONT1);
+	Pj2=CONT2.tab[j2];
+	//Pj2=CONT.first->data;
 	Segment S=set_segment(Pj1,Pj2);
 	for (int j=j1+1;j<j2;j++){
-	  dj=dist_point_seg(CONT1.first->data,Pj1,Pj2);
+	  dj=dist_point_seg(CONT2.tab[0],Pj1,Pj2);
 	  if (dmax<dj){
 		dmax=dj;
 		k=j;
 	  }
 	}
 	if (dmax<=d){
-	  L.first->data=S;
+	  ajouter_element_liste_Segment(L,S);
 	}
 	else {
 	  L1=simplification_douglas_peucker(CONT, j1, k, d);

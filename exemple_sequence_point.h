@@ -17,7 +17,13 @@ Cellule_Liste_Point *creer_element_liste_Point(Point v);
 
 Liste_Point creer_liste_Point_vide();
 
+Liste_Segment creer_liste_Segment_vide();
+
 Liste_Point ajouter_element_liste_Point(Liste_Point L, Point e);
+
+Liste_Segment ajouter_element_liste_Segment(Liste_Segment L, Segment e);
+
+//ajouter_element_liste_Segment(Liste_Segment L, Segment e);
 
 Liste_Point supprimer_liste_Point(Liste_Point L);
 
