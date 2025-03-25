@@ -133,7 +133,7 @@ test_dist_point_segment.o : test_dist_point_segment.c geom2d.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
-test_simplification_douglas_pecker.o: test_simplification_douglas_pecker.c contour.h
+test_simplification_douglas_pecker.o: test_simplification_douglas_pecker.c contour.h 
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Compilation du module test_simplification_douglas_pecker"
@@ -185,7 +185,7 @@ test_dist_point_segment : test_dist_point_segment.o geom2d.o
 	@echo "---------------------------------------------"
 	$(CC) $^ $(LDOPTS) -o $@
 
-test_simplification_douglas_pecker : test_simplification_douglas_pecker.o image.o exemple_sequence_point.o contour.o
+test_simplification_douglas_pecker : test_simplification_douglas_pecker.o contour.o exemple_sequence_point.o geom2d.o image.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@
