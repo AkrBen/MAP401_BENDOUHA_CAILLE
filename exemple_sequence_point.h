@@ -13,7 +13,16 @@ typedef struct Tableau_Point_
 	Point *tab;          /* (pointeur vers) le tableau des elements */
 } Tableau_Point;
 
+typedef struct Tableau_Segment_
+{
+	unsigned int taille; /* nombre d'elements dans le tableau */
+	Segment *tab;          /* (pointeur vers) le tableau des elements */
+} Tableau_Segment;
+
+
 Cellule_Liste_Point *creer_element_liste_Point(Point v);
+
+Cellule_Liste_Segment *creer_element_liste_Segment(Segment v);
 
 Liste_Point creer_liste_Point_vide();
 
@@ -36,4 +45,5 @@ Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L);
 void ecrire_contour(Liste_Point L);
 
 /*Simplification de Douglas-Peucker d'un contour de points*/
-Liste_Segment simplification_douglas_peucker(Liste_Point CONT, int j1, int j2, int d);
+Liste_Point simplification_douglas_peucker(Tableau_Point CONT, int j1, int j2, double d);
+

@@ -5,11 +5,76 @@
 #include<contour.h>
 
 int main (int argc, char* argv[]){
+    FILE *fichier;
     Image I;
+    if (argc != 4) {
+        printf("Erreur: <fichier.pbm> <stroke ou fill>\n");
+        return -1;
+    }
     I=lire_fichier_image(argv[1]);
+    UINT h = hauteur_image(I);
+    UINT l = largeur_image(I);
+    char nom[1000];
+
+    int i;
+    for (i = 0; i < strlen(argv[1]) - 4; i++) {
+        nom[i] = argv[1][i];
+    }
+    nom[i] = '\0'; 
+    strcat(nom, "_");
+    strcat(nom, argv[3]);
+    strcat(nom, ".eps");
+    fichier = fopen(nom, "w");
+    if (fichier == NULL) {
+        printf("Erreur: impossible de créer le fichier %s\n", nom);
+        return -1;
+    }
+
+    fprintf(fichier, "%%!PS-Adobe-3.0 EPSF-3.0\n");
+    fprintf(fichier, "%%%%BoundingBox: 0 0 %d %d\n", l, h);
+    fprintf(fichier, "0 setlinewidth\n");
     Liste_Point L=creer_liste_Point_vide();
     L=calcul_ecriture_contour(I);
+    Tableau_Point L2=sequence_points_liste_vers_tableau(L);
     int x=atof(argv[2]);
-    Liste_Segment L1;
-    L1=simplification_douglas_peucker(L,10,50,x);
+    Liste_Point L1;
+    L1=simplification_douglas_peucker(L2,0,L2.taille,x);
+
+    Tableau_Point TP = sequence_points_liste_vers_tableau(L1);
+    int k = 0;
+    int nP = TP.taille;
+    Point premier_point, P;
+
+    while (k < nP) {
+        P = TP.tab[k];
+        premier_point = P;
+        fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h - P.y);
+        k++;
+
+        while (k < nP) {
+            P = TP.tab[k];
+            fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h - P.y);
+            k++;
+
+            if (P.x == premier_point.x && P.y == premier_point.y) {
+                break;
+            }
+        }
+        fprintf(fichier, "\n");
+    }
+
+    if (strcmp(argv[3], "stroke") == 0) {
+        fprintf(fichier, "stroke\n");
+    } else if (strcmp(argv[3], "fill") == 0) {
+        fprintf(fichier, "fill\n");
+    } else {
+        printf("Erreur: argument incorrect, utiliser 'stroke' ou 'fill'\n");
+        fclose(fichier);
+        return -1;
+    }
+
+    fprintf(fichier, "showpage\n");
+    fclose(fichier);
+
+    return 0;
 }
