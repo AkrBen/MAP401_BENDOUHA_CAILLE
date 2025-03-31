@@ -40,6 +40,7 @@ int main (int argc, char* argv[]){
     Tableau_Point L2=sequence_points_liste_vers_tableau(L);
     int x=atof(argv[2]);
     Liste_Point L1;
+    Liste_Point L_total;
     L1=simplification_douglas_peucker(L2,0,L2.taille,x);
 
     Tableau_Point TP = sequence_points_liste_vers_tableau(L1);
@@ -47,7 +48,7 @@ int main (int argc, char* argv[]){
     int nP = TP.taille;
     Point premier_point, P;
 
-    printf("Contour avec %d points.\nCe contour est composé de %d segments\n",nP,nP-1);
+    //printf("Contour avec %d points.\nCe contour est composé de %d segments\n",nP,nP-1);
 
     while (k < nP) {
         P = TP.tab[k];
@@ -80,5 +81,35 @@ int main (int argc, char* argv[]){
     fprintf(fichier, "showpage\n");
     fclose(fichier);
 
+    L_total=calcul_tous_contours(I);
+    Tableau_Point T_total=sequence_points_liste_vers_tableau(L_total);
+    nP=T_total.taille;
+    int j=0;
+    int c=0;
+    int compt=0;
+    Point Debut=T_total.tab[0];
+    Tableau_Point T_inter;
+    T_inter.tab = malloc(100000000 * sizeof(Point));
+    T_inter.taille=0;
+    int segments_total=0;
+    while(j<nP){
+        T_inter.taille++;
+        T_inter.tab[c]=T_total.tab[j];
+        c++;
+        if ((Debut.x==T_total.tab[j].x)&&(Debut.y==T_total.tab[j].y)){
+            Liste_Point L3=creer_liste_Point_vide();
+            L3=simplification_douglas_peucker(T_inter,0,T_inter.taille,x);
+            compt++;
+            segments_total=segments_total+compter_segments_contours(L3);
+            T_inter.taille=0;
+            c=0;
+        }
+        else if (c==1){
+            Debut=T_total.tab[j];
+        }
+        j++;
+    }
+    printf("Cette image simplifiée a %d points.\n",segments_total);
+    printf("Cette image simplifiée a %d segments.\n",segments_total-compt);
     return 0;
 }

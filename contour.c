@@ -196,9 +196,7 @@ Contour calcul_tous_contours(Image I){
     int h=hauteur_image(M);
     int c=0;
     int segments_total=0;
-    Liste_Point L2=creer_liste_Point_vide();
     Liste_Point L1=creer_liste_Point_vide();
-    Liste_Point L=creer_liste_Point_vide();
      for (int i=1;i<=l;i++){
         for (int j=1;j<=h;j++){
             if (get_pixel_image(M,i,j)==NOIR){
@@ -207,7 +205,7 @@ Contour calcul_tous_contours(Image I){
                 L=calcul_contour_a_partir_de_pixel(I,M,p);
                 segments_total=segments_total+compter_segments_contours(L);
                 //if (c>0){
-                    Liste_Point L2=creer_liste_Point_vide();
+                    //Liste_Point L2=creer_liste_Point_vide();
                     L1=concatener_liste_Point(L1,L);
                     //printf("L1: %d\n",c);
                     //ecrire_contour(L1);
