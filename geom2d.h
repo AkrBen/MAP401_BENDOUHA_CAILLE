@@ -105,3 +105,5 @@ Point C_t_3(Bezier3 B3, double t);
 
 Bezier3 Bezier2_en_Bezier3(Bezier2 B2);
 
+double dist_point_bezier2(Point P, Bezier2 B2, double t);
+
