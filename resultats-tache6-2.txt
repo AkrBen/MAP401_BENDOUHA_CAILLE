@@ -1,1 +1,39 @@
 image_poly_tache6.pbm:
+nombre de contours: 3
+nombre de segments: 488
+nombre de segments simplifiés avec d=1: 64
+nombre de segments simplifiés avec d=2: 44
+
+elephant-gotlib.pbm:
+nombre de contours: 313
+nombre de segments: 115564
+nombre de segments simplifiés avec d=1: 13069
+nombre de segments simplifiés avec d=2: 4131
+
+goudyini-A.pbm:
+nombre de contours: 258
+nombre de segments: 73444
+nombre de segments simplifiés avec d=1: 5487
+nombre de segments simplifiés avec d=2: 2637
+
+JoaquimHock-LesArbres.pbm:
+nombre de contours: 543
+nombre de segments: 231284
+nombre de segments simplifiés avec d=1: 26998
+nombre de segments simplifiés avec d=2: 12857
+
+cheval.pbm:
+nombre de contours: 59
+nombre de segments: 32002
+nombre de segments simplifiés avec d=1: 3129
+nombre de segments simplifiés avec d=2: 1365
+
+papillon2.pbm:
+nombre de contours: 140
+nombre de segments: 18212
+nombre de segments simplifiés avec d=1: 1845
+nombre de segments simplifiés avec d=2: 997
+
+
+
+

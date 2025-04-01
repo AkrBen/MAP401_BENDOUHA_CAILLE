@@ -84,8 +84,8 @@ int main (int argc, char* argv[]){
     L_total=calcul_tous_contours(I);
     Tableau_Point T_total=sequence_points_liste_vers_tableau(L_total);
     nP=T_total.taille;
-    int j=0;
-    int c=0;
+    int j=1;
+    int c=1;
     int compt=0;
     Point Debut=T_total.tab[0];
     Tableau_Point T_inter;
