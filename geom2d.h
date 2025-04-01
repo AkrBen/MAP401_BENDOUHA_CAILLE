@@ -103,4 +103,4 @@ double dist_point_seg(Point P, Point A, Point B);
 Point C_t_2(Bezier2 B2, double t);
 Point C_t_3(Bezier3 B3, double t);
 
-Bezier3 Bezier2_en_Bezier(Bezier2, B);
+Bezier3 Bezier2_en_Bezier3(Bezier2 B2);
