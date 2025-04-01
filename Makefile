@@ -105,6 +105,13 @@ contour.o : contour.c contour.h image.h geom2d.h exemple_sequence_point.h
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
 
+approximation_bezier.o: approximation_bezier.c approximation_bezier.h contour.h geom2d.h exemple_sequence_point.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module approximation_bezier"
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
+
 test_contour.o : test_contour.c contour.h image.h geom2d.h exemple_sequence_point.h
 	@echo ""
 	@echo "---------------------------------------------"
