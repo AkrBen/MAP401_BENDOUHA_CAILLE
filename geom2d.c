@@ -90,3 +90,21 @@ double dist_point_seg(Point P, Point A, Point B){
 }
 }
 
+Point C_t_2(Bezier2 B2, double t){
+  Point P;
+  double x,y;
+  x = pow((1-t),2)*B2.C0.x+ 2*t*(1-t)*B2.C1.x + pow(t,2)*B2.C2.x
+  y = pow((1-t),2)*B2.C0.y+ 2*t*(1-t)*B2.C1.y + pow(t,2)*B2.C2.y
+  P = set_point(x,y);
+  return P;
+}
+
+Point C_t_3(Bezier3 B3, double t){
+  Point P;
+  double x,y;
+  x= pow((1-t),3)*B3.C0.x+ 3*t*pow((1-t),2)*B3.C1.x + 3*pow(t,2)*(1-t)*B3.C2.x + pow(t,3)*B3.C3.x
+  y= pow((1-t),3)*B3.C0.y+ 3*t*pow((1-t),2)*B3.C1.y + 3*pow(t,2)*(1-t)*B3.C2.y + pow(t,3)*B3.C3.y
+  P = set_point(x,y);
+  return P;
+}
+

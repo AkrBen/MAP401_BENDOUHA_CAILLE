@@ -49,6 +49,22 @@ typedef struct Liste_Segment_
 	                       /* first = last = NULL et taille = 0 <=> liste vide */
 } Liste_Segment;
 
+
+typedef struct Bezier2_
+{
+Point C0;
+Point C1;
+Point C2;
+} Bezier2 ;
+
+typedef struct Bezier3_
+{
+Point C0;
+Point C1;
+Point C2;
+Point C3;
+} Bezier3 ;
+
 typedef Liste_Point Contour; /* type Contour = type Liste_Point */
 
 /* cree le point de coordonnées (x,y) */  
@@ -84,5 +100,7 @@ double dist(Point P1, Point P2);
 /* Distance entre un Point P et un segment [A,B] */
 double dist_point_seg(Point P, Point A, Point B);
 
+Point C_t_2(Bezier2 B2, double t);
+Point C_t_3(Bezier3 B3, double t);
 
-
+Bezier3 Bezier2_en_Bezier(Bezier2, B);
