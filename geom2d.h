@@ -35,6 +35,22 @@ typedef struct Liste_Point_
 	                       /* first = last = NULL et taille = 0 <=> liste vide */
 } Liste_Point;
 
+typedef struct Liste_Point_En_Chaine
+{
+	Liste_Point data;    /* donnee de l'element de liste */
+	struct Liste_Point_En_Chaine* suiv; /* pointeur sur l'element suivant */
+} Liste_Point_En_Chaine;
+
+typedef struct Liste_de_liste_Point_
+{
+	unsigned int taille;        /* nombre d'elements dans la liste */
+	Liste_Point_En_Chaine *first; /* pointeur sur le premier element de la liste */
+	Liste_Point_En_Chaine *last;  /* pointeur sur le dernier element de la liste */
+	                       /* first = last = NULL et taille = 0 <=> liste vide */
+} Liste_de_liste_Point;
+
+
+
 typedef struct Cellule_Liste_Segment_
 {
 	Segment data;    /* donnee de l'element de liste */

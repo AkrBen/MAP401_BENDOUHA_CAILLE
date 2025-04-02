@@ -40,7 +40,7 @@ int main (int argc, char* argv[]){
     Tableau_Point L2=sequence_points_liste_vers_tableau(L);
     int x=atof(argv[2]);
     Liste_Point L1;
-    Liste_Point L_total;
+    Liste_de_liste_Point L_total;
     L1=simplification_douglas_peucker(L2,0,L2.taille,x);
 
     Tableau_Point TP = sequence_points_liste_vers_tableau(L1);
@@ -82,7 +82,7 @@ int main (int argc, char* argv[]){
     fclose(fichier);
 
     L_total=calcul_tous_contours(I);
-    Tableau_Point T_total=sequence_points_liste_vers_tableau(L_total);
+    Tableau_Point T_total=sequence_de_sequence_points_liste_vers_tableau(L_total);
     nP=T_total.taille;
     int j=1;
     int c=1;

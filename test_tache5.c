@@ -8,7 +8,7 @@
 int main(int argc, char* argv[]){
     Image I;
     I=lire_fichier_image(argv[1]);
-    Liste_Point L=creer_liste_Point_vide();
+    Liste_de_liste_Point L=creer_liste_de_liste_Point_vide();
     L=calcul_tous_contours(I);
     //ecrire_contour(L);
     return 1;

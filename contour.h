@@ -26,4 +26,4 @@ Contour calcul_ecriture_contour(Image I);
 Image pixels_candidats(Image I);
 Contour calcul_contour_a_partir_de_pixel(Image I, Image M, Point p);
 int compter_segments_contours(Contour L);
-Contour calcul_tous_contours(Image I);
+Liste_de_liste_Point calcul_tous_contours(Image I);

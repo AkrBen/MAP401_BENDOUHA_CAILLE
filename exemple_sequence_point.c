@@ -22,6 +22,20 @@ Cellule_Liste_Point *creer_element_liste_Point(Point v)
 	return el;
 }
 
+
+Liste_Point_En_Chaine *creer_element_liste_point_en_chaine(Liste_Point v){
+	Liste_Point_En_Chaine *el;
+	el=(Liste_Point_En_Chaine *)malloc(sizeof(Liste_Point_En_Chaine));
+	if (el==NULL)
+	{
+		fprintf(stderr, "creer_element_liste_de_liste_Point : allocation impossible\n");
+		exit(-1);
+	}
+	el->data = v;
+	el->suiv = NULL;
+	return el;
+}
+
 Cellule_Liste_Segment *creer_element_liste_Segment(Segment v)
 {
 	Cellule_Liste_Segment *el;
@@ -42,6 +56,11 @@ Liste_Point creer_liste_Point_vide()
 	return L;
 }
 
+Liste_de_liste_Point creer_liste_de_liste_Point_vide(){
+	Liste_de_liste_Point L = {0, NULL, NULL};
+	return L;
+}
+
 Liste_Segment creer_liste_Segment_vide()
 {
 	Liste_Segment L = {0, NULL, NULL};
@@ -55,6 +74,24 @@ Liste_Point ajouter_element_liste_Point(Liste_Point L, Point e)
 	Cellule_Liste_Point *el;
 	
 	el = creer_element_liste_Point(e);
+	if (L.taille == 0)
+	{
+		/* premier element de la liste */
+		L.first = L.last = el;
+	}
+	else
+	{
+		L.last->suiv = el;
+		L.last = el;
+	}
+	L.taille++;
+	return L;
+}
+
+Liste_de_liste_Point ajouter_element_liste_de_liste_Point(Liste_de_liste_Point L, Liste_Point e){
+	Liste_Point_En_Chaine *el;
+
+	el=creer_element_liste_point_en_chaine(e);
 	if (L.taille == 0)
 	{
 		/* premier element de la liste */
@@ -174,6 +211,43 @@ Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L)
 	return T;
 }
 
+Tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Point L) {
+    Tableau_Point T;
+    int total_points = 0;
+
+    Liste_Point_En_Chaine *cel = L.first;
+    while (cel) {
+        if (cel->data.first != NULL) {
+            total_points += cel->data.taille; 
+        }
+        cel = cel->suiv;
+    }
+
+    T.taille = total_points;
+    
+    T.tab = malloc(sizeof(Point) * T.taille);
+    if (T.tab == NULL) {
+        fprintf(stderr, "sequence_de_sequence_points_liste_vers_tableau : ");
+        fprintf(stderr, "allocation impossible\n");
+        exit(-1);
+    }
+    
+    int k = 0; 
+    cel = L.first;
+    while (cel) {
+        if (cel->data.first != NULL) {
+            Cellule_Liste_Point *el = cel->data.first; 
+            while (el) {
+                T.tab[k] = el->data;
+                k++;                  
+                el = el->suiv;        
+            }
+        }
+        cel = cel->suiv;  
+    }
+
+    return T;
+}
 
 
 /* ecrire le contour L a l'ecran 
