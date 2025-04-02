@@ -48,6 +48,7 @@ Liste_Segment creer_liste_Segment_vide()
 	return L;
 }
 
+
 /* ajouter l'element e en fin de la liste L, renvoie la liste L modifiee */
 Liste_Point ajouter_element_liste_Point(Liste_Point L, Point e)
 {
@@ -87,6 +88,7 @@ Liste_Segment ajouter_element_liste_Segment(Liste_Segment L, Segment e)
 	return L;
 }
 
+
 /* supprimer tous les elements de la liste, renvoie la liste L vide */
 Liste_Point supprimer_liste_Point(Liste_Point L)
 {
@@ -115,6 +117,7 @@ Liste_Point concatener_liste_Point(Liste_Point L1, Liste_Point L2)
 	L1.taille += L2.taille;   /* nouvelle taille pour L1 */
 	return L1;
 }
+
 
 /* si la liste est non vide, la fonction supprime le premier element de L 
    si la liste est vide, la fonction ne fait rien 

@@ -3,7 +3,6 @@
 #include<string.h>
 #include<math.h>
 #include<contour.h>
-#include<exemple_sequence_point.h>
 
 Bezier2 approx_bezier2(Contour L, int j1, int j2);
 

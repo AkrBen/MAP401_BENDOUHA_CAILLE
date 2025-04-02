@@ -57,6 +57,21 @@ Point C1;
 Point C2;
 } Bezier2 ;
 
+typedef struct Cellule_Liste_Bezier2_
+{
+	Bezier2 data;    /* donnee de l'element de liste */
+	struct Cellule_Liste_Bezier2_* suiv; /* pointeur sur l'element suivant */
+} Cellule_Liste_Bezier2;
+
+typedef struct Liste_Bezier2_
+{
+	unsigned int taille;        /* nombre d'elements dans la liste */
+	Cellule_Liste_Bezier2 *first; /* pointeur sur le premier element de la liste */
+	Cellule_Liste_Bezier2 *last;  /* pointeur sur le dernier element de la liste */
+	                       /* first = last = NULL et taille = 0 <=> liste vide */
+} Liste_Bezier2;
+
+
 typedef struct Bezier3_
 {
 Point C0;
