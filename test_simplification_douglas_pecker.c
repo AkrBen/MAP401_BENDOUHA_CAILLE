@@ -82,6 +82,7 @@ int main (int argc, char* argv[]){
     fclose(fichier);
 
     L_total=calcul_tous_contours(I);
+    //printf("Taille de L_total:%d \n", L_total.taille);
     Tableau_Point T_total=sequence_de_sequence_points_liste_vers_tableau(L_total);
     nP=T_total.taille;
     int j=1;

@@ -206,7 +206,22 @@ Liste_de_liste_Point calcul_tous_contours(Image I){
                 segments_total=segments_total+compter_segments_contours(L);
                 //if (c>0){
                     //Liste_Point L2=creer_liste_Point_vide();
-                    ajouter_element_liste_de_liste_Point(L1, L);
+                    //L1.taille++;
+                    Liste_Point_En_Chaine *el;
+
+                    el=creer_element_liste_point_en_chaine(L);
+                    if (L1.taille == 0)
+                    {
+                        /* premier element de la liste */
+                        L1.first = L1.last = el;
+                    }
+                    else
+                    {
+                        L1.last->suiv = el;
+                        L1.last = el;
+                    }
+                    L1.taille++;
+                    //printf("Taille de la liste:%d \n", L1.taille);
                     //printf("L1: %d\n",c);
                     //ecrire_contour(L1);
                 //}

@@ -216,9 +216,11 @@ Tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Poin
     int total_points = 0;
 
     Liste_Point_En_Chaine *cel = L.first;
+	//printf("Taille de cette liste;%d\n",cel==NULL);
     while (cel) {
         if (cel->data.first != NULL) {
             total_points += cel->data.taille; 
+			
         }
         cel = cel->suiv;
     }
@@ -235,13 +237,12 @@ Tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Poin
     int k = 0; 
     cel = L.first;
     while (cel) {
-        if (cel->data.first != NULL) {
-            Cellule_Liste_Point *el = cel->data.first; 
-            while (el) {
-                T.tab[k] = el->data;
-                k++;                  
-                el = el->suiv;        
-            }
+        Liste_Point L= cel->data; 
+		Cellule_Liste_Point *el=L.first;
+        while (el) {
+            T.tab[k] = el->data;
+            k++;                  
+            el = el->suiv;        
         }
         cel = cel->suiv;  
     }
