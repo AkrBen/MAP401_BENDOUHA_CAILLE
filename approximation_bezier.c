@@ -4,52 +4,45 @@
 #include<math.h>
 #include<approximation_bezier.h>
 
-Bezier2 approx_bezier2(Contour L, int j1, int j2){
-    int n1=j2-j1;
-    float n=n1;
-    Point C0=L.first->data;
-    Point C1;
-    Point C2=L.last->data;
-    if (n==1){
-        C1.x=(C0.x+C2.x)/2;
-        C1.y=(C0.y+C2.y)/2;
-    }
-    else {
-        float alpha=3*n/(pow(n,2)-1);
-        float beta=(1-2*n)/(2*(n+1));
-        Tableau_Point T=sequence_points_liste_vers_tableau(L);
-        int i=1;
-        int nP=T.taille;
-        int sommeX=0;
-        int sommeY=0;
-        while(i<nP-1){
-            sommeX=sommeX+T.tab[i].x;
-            sommeY=sommeY+T.tab[i].y;
-            i++;
+Bezier2 approx_bezier2 (Tableau_Point CONT, int j1, int j2) {
+    Bezier2 B;
+    B.C0 = CONT.tab[j1];
+    B.C2 = CONT.tab[j2];
+
+    int n = j2 - j1;
+    
+    if (n == 1) {
+        B.C1.x = (CONT.tab[j1].x + CONT.tab[j2].x) / 2;
+        B.C1.y = (CONT.tab[j1].y + CONT.tab[j2].y) / 2;
+
+    } else if (n >= 2) {
+        double alpha = (3.0 * (double)n) / ((double)n * (double)n - 1.0);
+        double beta = (1.0 - 2.0 * (double)n) / (2.0 * ((double)n + 1.0));
+        double Sx = 0;
+        double Sy = 0;
+
+        for (int i = 1; i <= n - 1; i++) {
+            Sx = Sx + CONT.tab[i+j1].x;
+            Sy = Sy + CONT.tab[i+j1].y;
         }
-        C1.x=alpha*sommeX+beta*(C0.x+C2.x);
-        C1.y=alpha*sommeY+beta*(C0.y+C2.y);
+
+        B.C1.x = alpha * Sx + beta * (CONT.tab[j1].x + CONT.tab[j2].x);
+        B.C1.y = alpha * Sy + beta * (CONT.tab[j1].y + CONT.tab[j2].y);
     }
-    Bezier2 B2;
-    B2.C0=C0;
-    B2.C1=C1;
-    B2.C2=C2;
-    return B2;
+    return B;
 }
 
-Liste_Point simplification_douglas_peucker_bezier2(Contour CONT, int j1, int j2, int d){
+Liste_Point simplification_douglas_peucker_bezier2(Tableau_Point CONT, int j1, int j2, int d){
     int n= j2-j1;
-
+    
     Bezier2 B = approx_bezier2(CONT,j1,j2);
-
-    Tableau_Point CONT1 =sequence_points_liste_vers_tableau(CONT);
 
 	double dmax=0;
 	int k=j1;
 	for (int j=j1+1;j<=j2;j++){
         int i= j-j1;
-        double ti =(double)i/(double)n;
-        double dj=dist_point_bezier2(CONT1.tab[j], B, ti);
+        double ti =(double)(i)/(double)n;
+        double dj=dist_point_bezier2(CONT.tab[j], B, ti);
 		if (dmax<dj){
 			dmax=dj;
 			k=j;
