@@ -43,7 +43,7 @@ int main(int argc, char* argv[]){
     I = lire_fichier_image(argv[1]);
     Liste_de_liste_Point C = calcul_tous_contours(I);
     Liste_de_liste_Point CF;
-    
+    int nb_b=0;
     
     Tableau_tableau_Point C1 =sequence_de_sequence_points_liste_vers_tableau(C);
     int segments_total=0;
@@ -54,6 +54,8 @@ int main(int argc, char* argv[]){
         L = simplification_douglas_peucker_bezier2(C2,0 ,C2.taille-1,x);
         
         Tableau_Point T1 = sequence_points_liste_vers_tableau(L);
+        printf("T1.taille = %d\n", T1.taille);
+        nb_b=nb_b+(T1.taille)/3;
         Liste_Point LB3 = creer_liste_Point_vide();
         Cellule_Liste_Point *el0,*el1,*el2,*el3;
 
@@ -102,15 +104,17 @@ int main(int argc, char* argv[]){
     
     Tableau_tableau_Point TP = sequence_de_sequence_points_liste_vers_tableau(CF);
     int nP = TP.taille;
-    Point P,P1,P2,P3,P4;
+    
+    Point P,P2,P3,P4;
 
     for (int k =0 ; k< nP; k++){
         P = TP.tab[k].tab[0];
-        int nP2=TP.tab[k].taille/4;
+        
         fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h - P.y);
 
-        for (int k1 =1 ; k1< nP2; k1++){
-            P1 = TP.tab[k].tab[k1*4+0];
+        int nP2=TP.tab[k].taille/4;
+        for (int k1 =0 ; k1< nP2; k1++){
+            
             P2 = TP.tab[k].tab[k1*4+1];
             P3 = TP.tab[k].tab[k1*4+2];
             P4 = TP.tab[k].tab[k1*4+3];
@@ -135,5 +139,7 @@ int main(int argc, char* argv[]){
 
     printf("Cette image simplifiée a %d points.\n",segments_total);
     printf("Cette image simplifiée a %d segments.\n",segments_total-compt);
+    printf("nb courbes de bezier2 : %d \n",nb_b);
+    
     return 0;
 }
