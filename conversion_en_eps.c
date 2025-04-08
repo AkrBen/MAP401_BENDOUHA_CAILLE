@@ -40,28 +40,24 @@ int main(int argc, char *argv[]) {
     fprintf(fichier, "0 setlinewidth\n");
 
     C = calcul_tous_contours(I);
-    Tableau_Point TP = sequence_de_sequence_points_liste_vers_tableau(C);
-    int k = 0;
+    Tableau_tableau_Point TP = sequence_de_sequence_points_liste_vers_tableau(C);
     int nP = TP.taille;
-    Point premier_point, P;
+   
+    Point P;
 
-    while (k < nP) {
-        P = TP.tab[k];
-        premier_point = P;
+    for (int k =0 ; k< nP; k++){
+        P = TP.tab[k].tab[0];
+        int nP2=TP.tab[k].taille;
         fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h - P.y);
-        k++;
 
-        while (k < nP) {
-            P = TP.tab[k];
+        for (int k1 =1 ; k1< nP2; k1++){
+            P = TP.tab[k].tab[k1];
             fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h - P.y);
-            k++;
 
-            if (P.x == premier_point.x && P.y == premier_point.y) {
-                break;
-            }
         }
         fprintf(fichier, "\n");
     }
+    
 
     if (strcmp(argv[2], "stroke") == 0) {
         fprintf(fichier, "stroke\n");
