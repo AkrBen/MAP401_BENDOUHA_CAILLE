@@ -138,3 +138,6 @@ Bezier3 Bezier2_en_Bezier3(Bezier2 B2);
 
 double dist_point_bezier2(Point P, Bezier2 B2, double t);
 
+Bezier2 creation_Bezier2(Point P1,Point P2,Point P3);
+
+Bezier3 creation_Bezier3(Point P1,Point P2,Point P3,Point P4);
