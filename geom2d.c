@@ -90,6 +90,23 @@ double dist_point_seg(Point P, Point A, Point B){
 }
 }
 
+Bezier2 creation_Bezier2(Point P1,Point P2,Point P3){
+    Bezier2 B2;
+    B2.C0 = P1;
+    B2.C1 = P2;
+    B2.C2 = P3;
+    return B2;
+}
+
+Bezier3 creation_Bezier3(Point P1,Point P2,Point P3,Point P4){
+  Bezier3 B3;
+  B3.C0 = P1;
+  B3.C1 = P2;
+  B3.C2 = P3;
+  B3.C3 = P4;
+  return B3;
+}
+
 Point C_t_2(Bezier2 B2, double t){
   Point P;
   double x,y;
