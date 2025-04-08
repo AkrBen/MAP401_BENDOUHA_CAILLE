@@ -13,6 +13,12 @@ typedef struct Tableau_Point_
 	Point *tab;          /* (pointeur vers) le tableau des elements */
 } Tableau_Point;
 
+typedef struct Tableau_tableau_Point_
+{
+	unsigned int taille; /* nombre d'elements dans le tableau */
+	Tableau_Point *tab;          /* (pointeur vers) le tableau des elements */
+} Tableau_tableau_Point;
+
 typedef struct Tableau_Segment_
 {
 	unsigned int taille; /* nombre d'elements dans le tableau */
@@ -52,7 +58,7 @@ Liste_Point concatener_liste_Point(Liste_Point L1, Liste_Point L2);
 
 Liste_Point supprimer_premier_element_liste_Point(Liste_Point L);
 Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L);
-Tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Point L);
+Tableau_tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Point L);
 
 Liste_Point creer_liste_Bezier2_vide();
 Liste_Point ajouter_element_liste_Bezier2(Liste_Bezier2 L, Bezier2 B2);

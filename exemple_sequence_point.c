@@ -56,7 +56,12 @@ Liste_Point creer_liste_Point_vide()
 	return L;
 }
 
-Liste_de_liste_Point creer_liste_de_liste_Point_vide(){
+Liste_de_liste_Point creer_liste_de_liste_Point_vide()
+{
+	//Liste_Point first=creer_liste_Point_vide();
+	//Liste_Point last=creer_liste_Point_vide();
+	//Liste_Point_En_Chaine *el1=creer_element_liste_point_en_chaine(first);
+	//Liste_Point_En_Chaine *el2=creer_element_liste_point_en_chaine(last);
 	Liste_de_liste_Point L = {0, NULL, NULL};
 	return L;
 }
@@ -211,23 +216,21 @@ Tableau_Point sequence_points_liste_vers_tableau(Liste_Point L)
 	return T;
 }
 
-Tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Point L) {
-    Tableau_Point T;
+
+Tableau_tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Point L) {
+    Tableau_tableau_Point T;
     int total_points = 0;
 
     Liste_Point_En_Chaine *cel = L.first;
-	//printf("Taille de cette liste;%d\n",cel==NULL);
+    //printf("Taille de cette liste;%d\n",cel==NULL);
     while (cel) {
-        if (cel->data.first != NULL) {
-            total_points += cel->data.taille; 
-			
-        }
+        total_points++;
         cel = cel->suiv;
     }
 
     T.taille = total_points;
     
-    T.tab = malloc(sizeof(Point) * T.taille);
+    T.tab = malloc(sizeof(Tableau_Point) * T.taille);
     if (T.tab == NULL) {
         fprintf(stderr, "sequence_de_sequence_points_liste_vers_tableau : ");
         fprintf(stderr, "allocation impossible\n");
@@ -237,18 +240,15 @@ Tableau_Point sequence_de_sequence_points_liste_vers_tableau(Liste_de_liste_Poin
     int k = 0; 
     cel = L.first;
     while (cel) {
-        Liste_Point L= cel->data; 
-		Cellule_Liste_Point *el=L.first;
-        while (el) {
-            T.tab[k] = el->data;
-            k++;                  
-            el = el->suiv;        
-        }
+        Liste_Point L1= cel->data; 
+        T.tab[k]=sequence_points_liste_vers_tableau(L1);
+        k++;
         cel = cel->suiv;  
     }
 
     return T;
 }
+
 
 
 /* ecrire le contour L a l'ecran 

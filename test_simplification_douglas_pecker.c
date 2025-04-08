@@ -7,6 +7,7 @@
 int main (int argc, char* argv[]){
     FILE *fichier;
     Image I;
+    int x=atof(argv[2]);
     if (argc != 4) {
         printf("Erreur: <fichier.pbm> <stroke ou fill>\n");
         return -1;
@@ -35,35 +36,55 @@ int main (int argc, char* argv[]){
     fprintf(fichier, "%%!PS-Adobe-3.0 EPSF-3.0\n");
     fprintf(fichier, "%%%%BoundingBox: 0 0 %d %d\n", l, h);
     fprintf(fichier, "0 setlinewidth\n");
-    Liste_Point L=creer_liste_Point_vide();
-    L=calcul_ecriture_contour(I);
-    Tableau_Point L2=sequence_points_liste_vers_tableau(L);
-    int x=atof(argv[2]);
-    Liste_Point L1;
+
     Liste_de_liste_Point L_total;
-    L1=simplification_douglas_peucker(L2,0,L2.taille,x);
+    L_total=calcul_tous_contours(I);
+    //printf("Taille de L_total:%d \n", L_total.taille);
 
-    Tableau_Point TP = sequence_points_liste_vers_tableau(L1);
-    int k = 0;
-    int nP = TP.taille;
-    Point premier_point, P;
+    Tableau_tableau_Point T_total=sequence_de_sequence_points_liste_vers_tableau(L_total);
 
-    //printf("Contour avec %d points.\nCe contour est composé de %d segments\n",nP,nP-1);
+    Liste_de_liste_Point L_simpli=creer_liste_de_liste_Point_vide();
+    int nP=T_total.taille;
+    
+    int compt=0;
 
-    while (k < nP) {
-        P = TP.tab[k];
-        premier_point = P;
+    int segments_total=0;
+    for (int j =0 ; j< nP; j++){
+        int nP1 = T_total.tab[j].taille;
+        Liste_Point L3 = simplification_douglas_peucker(T_total.tab[j],0,nP1-1,x);
+        Liste_Point_En_Chaine *el;
+
+        el=creer_element_liste_point_en_chaine(L3);
+        if (L_simpli.taille == 0)
+        {
+            /* premier element de la liste */
+            L_simpli.first = L_simpli.last = el;
+        }
+        else
+        {
+            L_simpli.last->suiv = el;
+            L_simpli.last = el;
+        }
+        L_simpli.taille++;
+        segments_total=segments_total+compter_segments_contours(L3);
+     }
+ 
+
+    Tableau_tableau_Point TP = sequence_de_sequence_points_liste_vers_tableau(L_simpli);
+    printf("Taille de L3: %d \n", TP.taille);
+    nP = TP.taille;
+    printf("Taille de L3: %d \n", T_total.taille);
+    Point P;
+
+    for (int k =0 ; k< nP; k++){
+        P = TP.tab[k].tab[0];
+        int nP2=TP.tab[k].taille;
         fprintf(fichier, "%5.1f %5.1f moveto\n", P.x, h - P.y);
-        k++;
 
-        while (k < nP) {
-            P = TP.tab[k];
+        for (int k1 =1 ; k1< nP2; k1++){
+            P = TP.tab[k].tab[k1];
             fprintf(fichier, "%5.1f %5.1f lineto\n", P.x, h - P.y);
-            k++;
 
-            if (P.x == premier_point.x && P.y == premier_point.y) {
-                break;
-            }
         }
         fprintf(fichier, "\n");
     }
@@ -81,35 +102,6 @@ int main (int argc, char* argv[]){
     fprintf(fichier, "showpage\n");
     fclose(fichier);
 
-    L_total=calcul_tous_contours(I);
-    //printf("Taille de L_total:%d \n", L_total.taille);
-    Tableau_Point T_total=sequence_de_sequence_points_liste_vers_tableau(L_total);
-    nP=T_total.taille;
-    int j=1;
-    int c=1;
-    int compt=0;
-    Point Debut=T_total.tab[0];
-    Tableau_Point T_inter;
-    T_inter.tab = malloc(100000000 * sizeof(Point));
-    T_inter.taille=0;
-    int segments_total=0;
-    while(j<nP){
-        T_inter.taille++;
-        T_inter.tab[c]=T_total.tab[j];
-        c++;
-        if ((Debut.x==T_total.tab[j].x)&&(Debut.y==T_total.tab[j].y)){
-            Liste_Point L3=creer_liste_Point_vide();
-            L3=simplification_douglas_peucker(T_inter,0,T_inter.taille,x);
-            compt++;
-            segments_total=segments_total+compter_segments_contours(L3);
-            T_inter.taille=0;
-            c=0;
-        }
-        else if (c==1){
-            Debut=T_total.tab[j];
-        }
-        j++;
-    }
     printf("Cette image simplifiée a %d points.\n",segments_total);
     printf("Cette image simplifiée a %d segments.\n",segments_total-compt);
     return 0;
