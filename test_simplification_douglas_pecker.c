@@ -46,7 +46,6 @@ int main (int argc, char* argv[]){
     Liste_de_liste_Point L_simpli=creer_liste_de_liste_Point_vide();
     int nP=T_total.taille;
     
-    int compt=0;
 
     int segments_total=0;
     for (int j =0 ; j< nP; j++){
@@ -71,9 +70,7 @@ int main (int argc, char* argv[]){
  
 
     Tableau_tableau_Point TP = sequence_de_sequence_points_liste_vers_tableau(L_simpli);
-    printf("Taille de L3: %d \n", TP.taille);
     nP = TP.taille;
-    printf("Taille de L3: %d \n", T_total.taille);
     Point P;
 
     for (int k =0 ; k< nP; k++){
@@ -103,6 +100,6 @@ int main (int argc, char* argv[]){
     fclose(fichier);
 
     printf("Cette image simplifiée a %d points.\n",segments_total);
-    printf("Cette image simplifiée a %d segments.\n",segments_total-compt);
+    printf("Cette image simplifiée a %d segments.\n",segments_total-nP);
     return 0;
 }
