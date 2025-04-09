@@ -55,7 +55,7 @@ int main(int argc, char* argv[]){
         
         Tableau_Point T1 = sequence_points_liste_vers_tableau(L);
         printf("T1.taille = %d\n", T1.taille);
-        nb_b=nb_b+(T1.taille)/3;
+        nb_b=nb_b+(T1.taille)/4;
         Liste_Point LB3 = creer_liste_Point_vide();
         Cellule_Liste_Point *el0,*el1,*el2,*el3;
 
@@ -138,7 +138,7 @@ int main(int argc, char* argv[]){
 
     printf("Cette image simplifiée a %d points.\n",segments_total);
     printf("Cette image simplifiée a %d segments.\n",segments_total-compt);
-    printf("nb courbes de bezier2 : %d \n",nb_b);
+    printf("nb courbes de bezier3 : %d \n",nb_b);
     
     return 0;
 }
