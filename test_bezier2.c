@@ -89,7 +89,7 @@ int main(int argc, char* argv[]){
 	    elt=creer_element_liste_point_en_chaine(LB3);
 	    if (CF.taille == 0)
 	    {   
-		    /* premier element de la liste */
+
 		    CF.first = CF.last = elt;
 	    }
 	    else

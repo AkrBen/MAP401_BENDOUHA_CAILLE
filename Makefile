@@ -37,7 +37,7 @@ INCLUDEOPTS = -I$(INCDIR)
 COMPILOPTS = -g -Wall $(INCLUDEOPTS)
 
 # liste des executables
-EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5 test_dist_point_segment test_simplification_douglas_pecker test_bezier2 
+EXECUTABLES = test_image test_geom2d test_contour conversion_en_eps test_tache5 test_dist_point_segment test_simplification_douglas_pecker test_bezier2 test_bezier3
 
 
 #############################################################################
@@ -154,6 +154,13 @@ test_bezier2.o : test_bezier2.c approximation_bezier.h contour.h geom2d.h exempl
 	@echo "Compilation du module test_bezier2 "
 	@echo "---------------------------------------------"
 	$(CC) -c $(COMPILOPTS) $<
+
+test_bezier3.o : test_bezier3.c approximation_bezier.h contour.h geom2d.h exemple_sequence_point.h
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Compilation du module test_bezier3 "
+	@echo "---------------------------------------------"
+	$(CC) -c $(COMPILOPTS) $<
 		
 ########################################################
 # regles explicites de creation des executables
@@ -208,6 +215,13 @@ test_simplification_douglas_pecker : test_simplification_douglas_pecker.o contou
 	$(CC) $^ $(LDOPTS) -o $@
 
 test_bezier2 : test_bezier2.o approximation_bezier.o image.o geom2d.o exemple_sequence_point.o contour.o
+	@echo ""
+	@echo "---------------------------------------------"
+	@echo "Creation de l'executable "$@
+	@echo "---------------------------------------------"
+	$(CC) $^ $(LDOPTS) -o $@
+
+test_bezier3 : test_bezier3.o approximation_bezier.o image.o geom2d.o exemple_sequence_point.o contour.o
 	@echo ""
 	@echo "---------------------------------------------"
 	@echo "Creation de l'executable "$@

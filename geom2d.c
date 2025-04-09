@@ -145,3 +145,8 @@ double dist_point_bezier2(Point P, Bezier2 B2, double t){
   return d;
 }
 
+double dist_point_bezier3(Point P,Bezier3 B3,double t){
+  Point P1 = C_t_3(B3,t);
+  double d = dist(P,P1);
+  return d;
+}
