@@ -2,78 +2,140 @@
 #include<stdlib.h>
 #include<string.h>
 #include<math.h>
-#include<image.h>
 #include<approximation_bezier.h>
 
-int main(){
-    //Liste_Point L=creer_liste_Point_vide();
-    int x0;
-    printf("Entrer valeur des abscisses de P0:\n");
-    scanf("%d", &x0);
+Bezier2 approx_bezier2 (Tableau_Point CONT, int j1, int j2) {
+    Bezier2 B2;
+    B2.C0 = CONT.tab[j1];
+    B2.C2 = CONT.tab[j2];
 
-    int y0;
-    printf("Entrer valeur des ordonnées de P0:\n");
-    scanf("%d", &y0);
+    int n = j2 - j1;
 
-    int x1;
-    printf("Entrer valeur des abscisses de P1:\n");
-    scanf("%d", &x1);
+    if (n == 1) {
+        B2.C1.x = (CONT.tab[j1].x + CONT.tab[j2].x) / 2;
+        B2.C1.y = (CONT.tab[j1].y + CONT.tab[j2].y) / 2;
 
-    int y1;
-    printf("Entrer valeur des ordonnées de P1:\n");
-    scanf("%d", &y1);
-    Point P0=set_point(x0,y0);
-    Point P1=set_point(x1,y1);
-    Tableau_Point T;
-    T.taille=2;
-    T.tab = malloc(sizeof(Point) * 10000);
-    T.tab[0]=P0;
-    T.tab[1]=P1;
-    Bezier2 B=approx_bezier2(T,0,1);
-    if ((dist(B.C0,P0)==0)&&(dist(B.C1,set_point((P0.x+P1.x)/2,(P0.y+P1.y)/2))==0)&&(dist(B.C2,P1)==0)){
-        printf("Le test d'approx_bezier2 pour n=1 est validé\n");
+    } else if (n >= 2) {
+        double a = (3.0 * (double)n) / ((double)n * (double)n - 1.0);
+        double b = (1.0 - 2.0 * (double)n) / (2.0 * ((double)n + 1.0));
+        double Sx = 0;
+        double Sy = 0;
+
+        for (int i = 1; i <= n - 1; i++) {
+            Sx = Sx + CONT.tab[i+j1].x;
+            Sy = Sy + CONT.tab[i+j1].y;
+        }
+
+        B2.C1.x = a * Sx + b * (CONT.tab[j1].x + CONT.tab[j2].x);
+        B2.C1.y = a * Sy + b * (CONT.tab[j1].y + CONT.tab[j2].y);
     }
-    else{
-        printf("Le test d'approx_bezier2 pour n=1 n'est pas validé\n");
-    }
-
-    int n;
-    do {
-        printf("Entrer une valeur entière pour n (n >= 2) :\n");
-        scanf("%d", &n);
-    } while (n < 2);
-
-    int x_0, y_0, x, y, x2, y2;
-
-    printf("Entrer les coordonnées de Q0 (x0 y0) :\n");
-    scanf("%d %d", &x_0, &y_0);
-
-    printf("Entrer les coordonnées de Q (x y) :\n");
-    scanf("%d %d", &x, &y);
-
-    printf("Entrer les coordonnées de Q2 (x2 y2) :\n");
-    scanf("%d %d", &x2, &y2);
-
-    Point Q0 = set_point(x_0, y_0);
-    Point Q = set_point(x, y);
-    Point Q2 = set_point(x2, y2);
-
-    Bezier2 B2=creation_Bezier2(Q0, Q, Q2);
-
-    Tableau_Point T2;
-    T2.taille = n+1;
-    T2.tab = malloc(sizeof(Point) * 10000);
-    for (int j=0; j<n+1; j++){
-        T2.tab[j] = C_t_2(B2,(double)(j/n));
-    }
-
-    Bezier2 B3=approx_bezier2(T2,0,n);
-    if ((B2.C0.x==B3.C0.x)&&(B2.C0.y==B3.C0.y)&&(B2.C1.x==B3.C1.x)&&(B2.C1.y==B3.C1.y)&&(B2.C2.x==B3.C2.x)&&(B2.C2.y==B3.C2.y)){
-        printf("Le test d'approx_bezier2 pour n>1 est validé\n");
-    }
-    else{
-        printf("Le test d'approx_bezier2 pour n>1 n'est pas validé\n");
-    }
-
-    return 0;
+    return B2;
 }
+
+Liste_Point simplification_douglas_peucker_bezier2(Tableau_Point CONT, int j1, int j2, int d){
+    int n= j2-j1;
+    
+    Bezier2 B2 = approx_bezier2(CONT,j1,j2);
+
+	double dmax=0;
+	int k=j1;
+	for (int j=j1+1;j<=j2;j++){
+        int i= j-j1;
+        double ti =(double)(i)/(double)n;
+        double dj=dist_point_bezier2(CONT.tab[j], B2, ti);
+		if (dmax<dj){
+			dmax=dj;
+
+			k=j;
+		}
+	}
+
+	Liste_Point L=creer_liste_Point_vide();
+	Liste_Point L1=creer_liste_Point_vide();
+	Liste_Point L2=creer_liste_Point_vide();
+	if (dmax<=d){
+		L=ajouter_element_liste_Point(L, B2.C0);
+        L=ajouter_element_liste_Point(L, B2.C1);
+        L=ajouter_element_liste_Point(L, B2.C2);
+	}
+	else {
+		L1=simplification_douglas_peucker_bezier2(CONT, j1, k, d);
+		L2=simplification_douglas_peucker_bezier2(CONT, k, j2, d);
+		L=concatener_liste_Point(L1,L2);
+	}
+	return L;
+}
+
+Bezier3 approx_bezier3 (Tableau_Point CONT,int j1,int j2){
+    Bezier3 B3;
+    int n =j2-j1;
+    if(n==1 || n==2){ 
+        Bezier2 B2=approx_bezier2(CONT,j1,j2);
+        B3 =Bezier2_en_Bezier3(B2);
+    }
+    else { // contour plus de trois point
+        Point C0=CONT.tab[j1];
+        Point C3=CONT.tab[j2];
+        // Calcul des coefs
+        double a=((-15)*pow((double) n,3)+5*pow((double) n,2)+2*n+4)/(3*((double) n+2)*(3*pow((double) n,2)+1));
+        double b=(10*pow((double) n,3)-(15*pow((double) n,2))+(double) n+2)/(3*((double) n+2)*(3*pow((double) n,2)+1));
+        double l=(70*(double) n)/(3*(pow((double) n,2)-1)*(pow((double) n,2)-4)*(3*pow((double) n,2)+1));
+        Point C1;
+        double sa=0;
+        double so=0;
+        for(int i=1;i<n;i++){
+            double d_i= (double) i ;
+            sa+=(6*pow(d_i,4)-8*(double) n*pow(d_i,3)+6*pow(d_i,2)-4*(double) n*d_i+pow((double) n,4)-pow((double) n,2))*CONT.tab[j1+i].x;
+            so+=(6*pow(d_i,4)-8*(double) n*pow(d_i,3)+6*pow(d_i,2)-4*(double) n*d_i+pow((double) n,4)-pow((double) n,2))*CONT.tab[j1+i].y;
+        }
+        C1.x=a*C0.x+l*sa+b*C3.x;
+        C1.y=a*C0.y+l*so+b*C3.y;
+        Point C2;
+        sa=0;
+        so=0;
+        for(int i=1;i<n;i++){
+            double d_i= (double) i ;
+            sa+=(6*pow((double) n-d_i,4)-8*(double) n*pow((double) n-d_i,3)+6*pow((double) n-d_i,2)-4*(double) n*((double) n-d_i)+pow((double) n,4)-pow((double) n,2))*CONT.tab[j1+i].x;
+            so+=(6*pow((double) n-d_i,4)-8*(double) n*pow((double) n-d_i,3)+6*pow((double) n-d_i,2)-4*(double) n*((double) n-d_i)+pow((double) n,4)-pow((double) n,2))*CONT.tab[j1+i].y;
+        }
+        C2.x=b*C0.x+l*sa+a*C3.x;
+        C2.y=b*C0.y+l*so+a*C3.y;
+        B3=creation_Bezier3(C0,C1,C2,C3);
+    }
+    return B3;
+}
+
+Liste_Point simplification_douglas_peucker_bezier3(Tableau_Point CONT,int j1,int j2,int d){
+
+    Liste_Point L =creer_liste_Point_vide(); 
+    int n =j2-j1; 
+    
+    Bezier3 B3 =approx_bezier3(CONT,j1,j2); 
+
+    double dmax=0;
+    int k = j1;
+    for(int j=j1+1;j<=j2;j++){
+        int i = j-j1;
+        double ti=(double)i/(double)n;
+        double dj=dist_point_bezier3(CONT.tab[j1+i],B3,ti);
+        if(dmax <dj) {
+            dmax=dj;
+            k=j;
+        }
+    }if(dmax <=d){
+        L=ajouter_element_liste_Point(L, B3.C0);
+        L=ajouter_element_liste_Point(L, B3.C1);
+        L=ajouter_element_liste_Point(L, B3.C2);
+        L=ajouter_element_liste_Point(L, B3.C3);
+    }else{
+     
+        Liste_Point L1=simplification_douglas_peucker_bezier3(CONT, j1, k, d);
+        Liste_Point L2=simplification_douglas_peucker_bezier3(CONT, k, j2, d);
+        L=concatener_liste_Point(L1,L2);
+    }
+    return L;
+}
+
+
+
+
