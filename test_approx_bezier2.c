@@ -64,8 +64,7 @@ int main(){
     T2.taille = n+1;
     T2.tab = malloc(sizeof(Point) * 10000);
     for (int j=0; j<n+1; j++){
-        T2.tab[j].x = C_t_2(B2,(j/n)).x;
-        T2.tab[j].y = C_t_2(B2,(j/n)).y;
+        T2.tab[j] = C_t_2(B2,(double)(j/n));
     }
 
     Bezier2 B3=approx_bezier2(T2,0,n);

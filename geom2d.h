@@ -66,7 +66,7 @@ typedef struct Liste_Segment_
 } Liste_Segment;
 
 
-typedef struct Bezier2_
+typedef struct Bezier2_ //Type Bézier2 contenant les 3 points de contrôle d'une courbe de Bézier 2
 {
 Point C0;
 Point C1;
@@ -88,7 +88,7 @@ typedef struct Liste_Bezier2_
 } Liste_Bezier2;
 
 
-typedef struct Bezier3_
+typedef struct Bezier3_ //Type Bézier3 contenant les 4 points de contrôle d'une courbe de Bézier 3
 {
 Point C0;
 Point C1;
@@ -131,15 +131,15 @@ double dist(Point P1, Point P2);
 /* Distance entre un Point P et un segment [A,B] */
 double dist_point_seg(Point P, Point A, Point B);
 
-Point C_t_2(Bezier2 B2, double t);
-Point C_t_3(Bezier3 B3, double t);
+Point C_t_2(Bezier2 B2, double t);//renvoie le point d'une courbe de Bézier 2 correspondant à un t passé en argument
+Point C_t_3(Bezier3 B3, double t);//renvoie le point d'une courbe de Bézier 3 correspondant à un t passé en argument
 
-Bezier3 Bezier2_en_Bezier3(Bezier2 B2);
+Bezier3 Bezier2_en_Bezier3(Bezier2 B2);//renvoie la courbe de Bézier 3 correspondante à la courbe de Bézier 2 passée en argument
 
-double dist_point_bezier2(Point P, Bezier2 B2, double t);
+double dist_point_bezier2(Point P, Bezier2 B2, double t); //renvoie la distance entre un point P et le point P1 d'une courbe de Bézier 2 à un t passé en argument
 
-double dist_point_bezier3(Point P, Bezier3 B3, double t);
+double dist_point_bezier3(Point P, Bezier3 B3, double t);//renvoie la distance entre le point P et la courbe de Bézier 3 B3 au temps t 
 
-Bezier2 creation_Bezier2(Point P1,Point P2,Point P3);
+Bezier2 creation_Bezier2(Point P1,Point P2,Point P3); //crée une courbe de Bézier 2 à partir de 3 points de contrôle
 
-Bezier3 creation_Bezier3(Point P1,Point P2,Point P3,Point P4);
+Bezier3 creation_Bezier3(Point P1,Point P2,Point P3,Point P4); //crée une courbe de Bézier 3 à partir de 4 points de contrôle P1, P2, P3 et P4
