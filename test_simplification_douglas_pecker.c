@@ -7,7 +7,7 @@
 int main (int argc, char* argv[]){
     FILE *fichier;
     Image I;
-    int x=atof(argv[2]);
+    double x=atof(argv[2]);
     if (argc != 4) {
         printf("Erreur: <fichier.pbm> <stroke ou fill>\n");
         return -1;

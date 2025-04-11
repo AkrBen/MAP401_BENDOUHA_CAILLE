@@ -32,7 +32,7 @@ Bezier2 approx_bezier2 (Tableau_Point CONT, int j1, int j2) {
     return B2;
 }
 
-Liste_Point simplification_douglas_peucker_bezier2(Tableau_Point CONT, int j1, int j2, int d){
+Liste_Point simplification_douglas_peucker_bezier2(Tableau_Point CONT, int j1, int j2, double d){
     int n= j2-j1;
     
     Bezier2 B2 = approx_bezier2(CONT,j1,j2);
@@ -105,7 +105,7 @@ Bezier3 approx_bezier3 (Tableau_Point CONT,int j1,int j2){
     return B3;
 }
 
-Liste_Point simplification_douglas_peucker_bezier3(Tableau_Point CONT,int j1,int j2,int d){
+Liste_Point simplification_douglas_peucker_bezier3(Tableau_Point CONT,int j1,int j2,double d){
 
     Liste_Point L =creer_liste_Point_vide(); 
     int n =j2-j1; 
