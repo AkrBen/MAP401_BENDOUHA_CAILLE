@@ -12,6 +12,7 @@ int points_egaux(Point A, Point B) {
 }
 
 int main(){
+    Point P0,P1,P2,P3,P4,P5,P6,P7,P8;
     int x0, y0, x1, y1;
     printf("Entrer valeur des abscisses de P0:\n");
     scanf("%d", &x0);
@@ -22,8 +23,8 @@ int main(){
     printf("Entrer valeur des ordonnées de P1:\n");
     scanf("%d", &y1);
 
-    Point P0 = set_point(x0, y0);
-    Point P1 = set_point(x1, y1);
+    P0 = set_point(x0, y0);
+    P1 = set_point(x1, y1);
 
     Tableau_Point T;
     T.taille = 2;
@@ -82,8 +83,48 @@ int main(){
     printf("C1 : %f,%f = %f,%f\n", B2.C1.x, B2.C1.y, B3.C1.x, B3.C1.y);
     printf("C2 : %f,%f = %f,%f\n", B2.C2.x, B2.C2.y, B3.C2.x, B3.C2.y);
 
+    Tableau_Point T3;
+    T3.taille = 9;
+    T3.tab = malloc(sizeof(Point) * 10000);
+
+    P0 = set_point(0, 0);
+    P1 = set_point(1, 0);
+    P2 = set_point(1, 1);
+    P3 = set_point(1, 2);
+    P4 = set_point(2, 2);
+    P5 = set_point(3, 2);
+    P6 = set_point(3, 3);
+    P7 = set_point(4, 3);
+    P8 = set_point(5, 3);
+
+    T3.tab[0] = P0;
+    T3.tab[1] = P1;
+    T3.tab[2] = P2;
+    T3.tab[3] = P3;
+    T3.tab[4] = P4;
+    T3.tab[5] = P5;
+    T3.tab[6] = P6;
+    T3.tab[7] = P7;
+    T3.tab[8] = P8;
+
+    Point PF = set_point(1.547619,2.452381);
+
+    Bezier2 B4 = approx_bezier2(T3, 0, 8); 
+
+    printf("Test 9 Points\n");
+    printf("C0 : %f,%f\n",B4.C0.x, B4.C0.y);
+    printf("C1 : %f,%f\n",B4.C1.x, B4.C1.y);
+    printf("C2 : %f,%f\n",B4.C2.x, B4.C2.y);
+    
+    if (points_egaux(B4.C0,P0) && points_egaux(B4.C1, PF)&& points_egaux(B4.C2, P8)) {
+        printf("Le Test des 9 points est validé\n");
+    } else {
+        printf("Le Test des 9 points n'est pas validé\n");
+    }
+
     free(T.tab);
     free(T2.tab);
+    free(T3.tab);
 
     return 0;
 }
