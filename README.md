@@ -202,5 +202,5 @@ MAP401_BENDOUHA_CAILLE/
 ## Academic Context
 
 Université Grenoble Alpes (UGA)  
-MAP401 — 2024–2025  
+L2 Mathématiques et Informatique — 2024–2025  
 Academic project developed as a team of two.
